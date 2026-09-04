@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;450;500;550;600;650;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme="dark"] {
+  --canvas: #0B0F17;
+  --canvas-raised: #10182A;
+  --canvas-overlay: #131E35;
+
+  --glass-bg: rgba(255, 255, 255, 0.045);
+  --glass-bg-hover: rgba(255, 255, 255, 0.075);
+  --glass-border: rgba(255, 255, 255, 0.09);
+  --glass-highlight: rgba(255, 255, 255, 0.14);
+  --glass-blur: 28px;
+  --glass-saturate: 140%;
+
+  --text-primary: #F4F6FA;
+  --text-secondary: #93A0B4;
+  --text-tertiary: #5C6B82;
+
+  --brand-blue: #3395FF;
+  --brand-blue-dim: #1E5FA8;
+  --brand-blue-glow: rgba(51, 149, 255, 0.20);
+  --brand-navy: #192839;
+
+  --human-amber: #F5A623;
+  --human-amber-glow: rgba(245, 166, 35, 0.25);
+  --human-amber-subtle: rgba(245, 166, 35, 0.10);
+
+  --success-teal: #2FD1A6;
+  --success-teal-glow: rgba(47, 209, 166, 0.20);
+  --danger-crimson: #F2545B;
+  --danger-crimson-glow: rgba(242, 84, 91, 0.20);
+  --neutral-slate: #64748B;
+
+  --font-ui: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", "IBM Plex Mono", monospace;
+}
+
+[data-theme="light"] {
+  --canvas: #F6F7FA;
+  --canvas-raised: #FFFFFF;
+  --canvas-overlay: #F0F3F8;
+
+  --glass-bg: rgba(25, 40, 57, 0.035);
+  --glass-bg-hover: rgba(25, 40, 57, 0.065);
+  --glass-border: rgba(25, 40, 57, 0.10);
+  --glass-highlight: rgba(255, 255, 255, 0.80);
+
+  --text-primary: #101826;
+  --text-secondary: #5B6B81;
+  --text-tertiary: #8A9BB2;
+
+  --brand-blue: #2E7FE0;
+  --brand-blue-dim: #99C5F7;
+  --brand-blue-glow: rgba(46, 127, 224, 0.15);
+  --brand-navy: #192839;
+
+  --human-amber: #C97A00;
+  --human-amber-glow: rgba(201, 122, 0, 0.20);
+  --human-amber-subtle: rgba(201, 122, 0, 0.08);
+
+  --success-teal: #0E9F6E;
+  --success-teal-glow: rgba(14, 159, 110, 0.20);
+  --danger-crimson: #D92534;
+  --danger-crimson-glow: rgba(217, 37, 52, 0.20);
+  --neutral-slate: #64748B;
+}
+
+* {
+  border-color: var(--glass-border);
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--canvas);
+  color: var(--text-primary);
+  font-family: var(--font-ui);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Tabular figures for all financial & numerical readings */
+.font-mono,
+[data-tabular="true"] {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums lining-nums;
+  letter-spacing: -0.01em;
+}
+
+/* Liquid Glass Panel primitives */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--glass-highlight);
+}
+
+.glass-panel-interactive {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--glass-border);
+  border-top-color: var(--glass-highlight);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-interactive:hover {
+  background: var(--glass-bg-hover);
+  border-color: rgba(255, 255, 255, 0.16);
+  border-top-color: rgba(255, 255, 255, 0.24);
+}
+
+/* Reserved Human Attention Glow */
+.glass-panel-amber {
+  background: rgba(245, 166, 35, 0.05);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid rgba(245, 166, 35, 0.35);
+  border-top-color: rgba(245, 166, 35, 0.60);
+  box-shadow: 0 0 20px var(--human-amber-glow), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.glass-panel-amber-row {
+  border-left: 3px solid var(--human-amber);
+  background: rgba(245, 166, 35, 0.035);
+  box-shadow: inset 0 0 12px rgba(245, 166, 35, 0.05);
+}
+
+/* Custom Minimalist Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.24);
+}

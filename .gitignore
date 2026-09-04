@@ -14,9 +14,12 @@ build/
 .venv/
 venv/
 
-# Node
+# Node & Next.js
 node_modules/
 package-lock.json
+.next/
+out/
+*.tsbuildinfo
 
 # OS
 .DS_Store
