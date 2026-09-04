@@ -42,12 +42,14 @@ def verify_hash_chain(audit_path: Path) -> Tuple[bool, int, str]:
             d = json.loads(line.strip())
             stored_prev = d.get("prev_hash")
             stored_hash = d.get("canonical_hash")
-            if stored_prev is not None and stored_prev != prev_hash:
+            if not stored_hash or not stored_prev:
+                return False, count, f"Missing cryptographic hash at record {idx}"
+            if stored_prev != prev_hash:
                 return False, count, f"Broken link at record {idx}: stored prev {stored_prev} != expected {prev_hash}"
             expected_hash = compute_canonical_hash(d, prev_hash)
-            if stored_hash is not None and stored_hash != expected_hash:
+            if stored_hash != expected_hash:
                 return False, count, f"Hash mismatch at record {idx}: stored {stored_hash} != computed {expected_hash}"
-            prev_hash = stored_hash or expected_hash
+            prev_hash = stored_hash
             count += 1
     return True, count, f"All {count} records cryptographically valid"
 

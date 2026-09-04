@@ -29,6 +29,7 @@ from models import FailureInput, AgentResult, Decision, Event, CaseType, CaseSta
 from engine_config import default_payment_config, default_mandate_config, EngineConfig
 from engine import decide
 from reporting import compute_recovery_summary, sanity_check, print_summary
+from benchmark import write_audit_records
 
 OUTPUT_DIR = Path("output")
 
@@ -610,13 +611,9 @@ def main():
     summary = batch_output["summary"]
     run_id = batch_output["run_id"]
 
-    # Write audit log (append-only JSONL of all decisions)
+    # Write audit log (append-only JSONL of all decisions with SHA-256 hash chain)
     print(f"\n▶ Writing audit log to {audit_log_path}...")
-    with open(audit_log_path, "w") as f:
-        for dec in batch_output["all_decisions"]:
-            d_dict = dec.to_dict()
-            d_dict["run_id"] = run_id
-            f.write(json.dumps(d_dict, default=str) + "\n")
+    write_audit_records(audit_log_path, batch_output["all_decisions"], run_id=run_id, mode="w")
     print(f"  Written {len(batch_output['all_decisions'])} decision entries")
 
     # Write event log

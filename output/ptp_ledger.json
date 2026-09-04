@@ -955,5 +955,71 @@
     "status": "PENDING",
     "created_at": "2026-09-04T13:44:28.634148+05:30",
     "notes": "Test PTP"
+  },
+  {
+    "ptp_id": "ptp_v-1_88",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-05",
+    "status": "PENDING",
+    "created_at": "2026-09-04T13:59:09.695884+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_v-1_89",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-05",
+    "status": "PENDING",
+    "created_at": "2026-09-04T13:59:09.698493+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_c-test-p_90",
+    "case_id": "c-test-ptp-99",
+    "customer_name": "Vikram Sen",
+    "phone": "+919111222333",
+    "amount_paise": 350000,
+    "promised_date": "2026-09-10",
+    "status": "PENDING",
+    "created_at": "2026-09-04T13:59:12.358241+05:30",
+    "notes": "Test PTP"
+  },
+  {
+    "ptp_id": "ptp_v-1_91",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-05",
+    "status": "PENDING",
+    "created_at": "2026-09-04T14:00:07.184947+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_v-1_92",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-05",
+    "status": "PENDING",
+    "created_at": "2026-09-04T14:00:07.187882+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_c-test-p_93",
+    "case_id": "c-test-ptp-99",
+    "customer_name": "Vikram Sen",
+    "phone": "+919111222333",
+    "amount_paise": 350000,
+    "promised_date": "2026-09-10",
+    "status": "PENDING",
+    "created_at": "2026-09-04T14:00:08.001749+05:30",
+    "notes": "Test PTP"
   }
 ]

@@ -11,7 +11,7 @@ through an explicit pipeline.
 import uuid
 import random
 from datetime import datetime, timedelta, timezone
-from typing import Dict, List, Optional, Set, Any
+from typing import Dict, List, Optional, Set, Any, Tuple
 
 from models import (
     FailureInput, Decision, AgentResult, Event,

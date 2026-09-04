@@ -1,7 +1,7 @@
 {
-  "run_id": "bm_20260904_134428_42",
+  "run_id": "bm_20260904_140008_42",
   "seed": 42,
-  "executed_at": "2026-09-04T13:44:28.643569",
+  "executed_at": "2026-09-04T14:00:08.010477",
   "total_cases": 15,
   "total_revenue_at_risk_paise": 1500000,
   "control_recovered_paise": 200000,

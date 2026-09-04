@@ -29,7 +29,7 @@ from reporting import (
     format_checkout_dropoffs_table,
 )
 from voice_fsm import run_scripted_scenario, load_suppression_list
-from benchmark import run_comparative_benchmark, BENCHMARK_FILE
+from benchmark import run_comparative_benchmark, BENCHMARK_FILE, write_audit_records
 from razorpay_client import is_testbed_ready, get_client, create_payment_link
 from webhook_handler import simulate_testbed_capture, run_webhook_server
 from timing_engine import predict_optimal_retry_slot
@@ -92,11 +92,7 @@ def save_run_outputs(batch_output: dict, seed: int):
             "summary": batch_output["summary"],
         }, f, indent=2, default=str)
     audit_path = OUTPUT_DIR / "audit_log.jsonl"
-    with open(audit_path, "w") as f:
-        for dec in batch_output["all_decisions"]:
-            d = dec.to_dict()
-            d["run_id"] = batch_output["run_id"]
-            f.write(json.dumps(d, default=str) + "\n")
+    write_audit_records(audit_path, batch_output["all_decisions"], run_id=batch_output["run_id"], mode="w")
     return audit_path
 
 
@@ -328,7 +324,6 @@ def process_testbed_payment(client, p: dict):
 def cmd_testbed_sync(args):
     """Ingest live failed payments from Razorpay testbed & execute recovery pipeline."""
     from razorpay_client import fetch_testbed_failed_payments
-    from benchmark import write_audit_records
     if not is_testbed_ready():
         return "❌ Razorpay testbed credentials missing or invalid in .env"
     client = get_client()

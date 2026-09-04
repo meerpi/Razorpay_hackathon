@@ -469,27 +469,30 @@ def test_bootstrap_confidence_interval():
 
 
 def test_hash_chain_tamper_detection():
-    """Verify SHA-256 continuous hash chain detects bit-level payload tampering."""
+    """Verify SHA-256 continuous hash chain detects bit-level payload tampering via production run wiring."""
     import json
-    from benchmark import write_audit_records
+    from main import save_run_outputs
     from audit_replay import verify_hash_chain
     f = make_test_failure(case_id="tamper-test")
     res = decide(f, default_payment_config(), random.Random(42))
-    temp_path = Path("output/test_tamper_log.jsonl")
-    write_audit_records(res.decisions, temp_path)
-    ok, count, msg = verify_hash_chain(temp_path)
+    batch_out = {
+        "run_id": "test_run_tamper", "executed_at": "2026-09-04T00:00:00Z",
+        "total_failures_input": 1, "successful_cases": 1, "summary": {},
+        "all_decisions": res.decisions
+    }
+    audit_path = save_run_outputs(batch_out, seed=42)
+    ok, count, msg = verify_hash_chain(audit_path)
     assert ok is True, f"Clean log verification failed: {msg}"
-    with open(temp_path, "r") as fh:
+    with open(audit_path, "r") as fh:
         lines = fh.readlines()
     d = json.loads(lines[1])
     d["action"] = "tampered_action"
     lines[1] = json.dumps(d) + "\n"
-    with open(temp_path, "w") as fh:
+    with open(audit_path, "w") as fh:
         fh.writelines(lines)
-    tampered_ok, err_idx, err_msg = verify_hash_chain(temp_path)
-    temp_path.unlink(missing_ok=True)
+    tampered_ok, err_idx, err_msg = verify_hash_chain(audit_path)
     assert tampered_ok is False and err_idx == 1 and "Hash mismatch at record 1" in err_msg
-    return "Hash chain tamper-proofing verified: single-byte modification flagged at exact record index."
+    return "Hash chain tamper-proofing verified via production save_run_outputs wiring: single-byte modification flagged at exact record index."
 
 
 def test_audit_paise_reconciliation():
