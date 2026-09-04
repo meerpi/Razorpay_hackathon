@@ -185,3 +185,66 @@ export interface PtpCommitment {
   notes: string;
   graceHoursRemaining: number;
 }
+
+export interface CaseTypeBreakdown {
+  total: number;
+  recovered: number;
+  rate: number;
+}
+
+export interface AgingBucketBreakdown {
+  total: number;
+  recovered: number;
+  rate: number;
+  total_amount_paise: number;
+  recovered_amount_paise: number;
+}
+
+export interface RecoverySummaryData {
+  generated_at: string;
+  epistemic_caveat: string;
+  total_cases: number;
+  recovered_cases: number;
+  overall_recovery_rate: number;
+  total_amount_paise: number;
+  recovered_amount_paise: number;
+  recovered_amount_rupees: number;
+  recovery_rate_by_amount: number;
+  by_case_type: Record<string, CaseTypeBreakdown>;
+  by_decline_class: Record<string, CaseTypeBreakdown>;
+  by_recovery_method: Record<string, number>;
+  by_aging_bucket: Record<string, AgingBucketBreakdown>;
+  by_checkout_stage?: Record<string, AgingBucketBreakdown>;
+  voice_escalation?: {
+    total_voice_cases: number;
+    voice_recovered: number;
+    voice_recovery_rate: number;
+  };
+  benchmarks_comparison?: Record<string, any>;
+}
+
+export interface BenchmarkResultsData {
+  run_id: string;
+  seed: number;
+  executed_at: string;
+  total_cases: number;
+  total_revenue_at_risk_paise: number;
+  control_recovered_paise: number;
+  treatment_recovered_paise: number;
+  control_penalty_fees_paise: number;
+  treatment_penalty_fees_paise: number;
+  control_violations: number;
+  treatment_violations: number;
+  control_net_recovery_paise: number;
+  treatment_net_recovery_paise: number;
+  net_recovery_lift_paise: number;
+  net_recovery_lift_pct: number;
+  lift_ci_lower_paise: number;
+  lift_ci_upper_paise: number;
+  lift_p_value: number;
+  is_statistically_significant: boolean;
+  control_comm_costs_paise: number;
+  treatment_comm_costs_paise: number;
+  control_interchange_paise: number;
+  treatment_interchange_paise: number;
+}

@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { clsx } from 'clsx';
 import {
+  BarChart3,
   Layers,
   Radio,
   ShieldCheck,
@@ -14,7 +15,6 @@ import {
   Sun,
   Moon,
   FlaskConical,
-  CheckCircle2,
 } from 'lucide-react';
 import { dataStore } from '@/lib/mock-data';
 
@@ -25,9 +25,20 @@ export const NavRail: React.FC = () => {
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
+    // Check initial counts from API or dataStore
+    fetch('/api/engine/cases?limit=1')
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.counts) {
+          setNeedsReviewCount(data.counts.needs_review || 0);
+        }
+      })
+      .catch(() => {
+        const cases = dataStore.getCases();
+        setNeedsReviewCount(cases.filter((c) => c.status === 'needs_review').length);
+      });
+
     const update = () => {
-      const cases = dataStore.getCases();
-      setNeedsReviewCount(cases.filter((c) => c.status === 'needs_review').length);
       const switches = dataStore.getSwitches();
       setHasDegradedSwitch(switches.some((s) => s.isDegraded));
     };
@@ -43,47 +54,64 @@ export const NavRail: React.FC = () => {
     document.documentElement.setAttribute('data-theme', next);
   };
 
-  const navItems = [
+  const navSections = [
     {
-      href: '/',
-      label: 'Transaction Queue',
-      icon: Layers,
-      badge: needsReviewCount > 0 ? needsReviewCount : undefined,
-      badgeColor: 'amber',
+      title: 'Recovery Performance',
+      items: [
+        {
+          href: '/',
+          label: 'Overview & Scoreboard',
+          icon: BarChart3,
+        },
+        {
+          href: '/queue',
+          label: 'Case Queue Blotter',
+          icon: Layers,
+          badge: needsReviewCount > 0 ? needsReviewCount : undefined,
+          badgeColor: 'amber',
+        },
+      ],
     },
     {
-      href: '/test-runner',
-      label: 'Test Lab (Live API)',
-      icon: FlaskConical,
-      badge: 'TESTBED',
-      badgeColor: 'blue',
-      highlight: true,
+      title: 'Statutory & Telemetry',
+      items: [
+        {
+          href: '/compliance',
+          label: 'Compliance & Gating',
+          icon: ShieldCheck,
+        },
+        {
+          href: '/audit-ledger',
+          label: 'Cryptographic Ledger',
+          icon: Link2,
+          badge: 'SHA-256',
+          badgeColor: 'slate',
+        },
+        {
+          href: '/switch-health',
+          label: 'Switch & Rail Health',
+          icon: Radio,
+          badge: hasDegradedSwitch ? 'FAILOVER' : undefined,
+          badgeColor: 'blue',
+        },
+        {
+          href: '/active-channels',
+          label: 'Active Channels',
+          icon: PhoneCall,
+        },
+      ],
     },
     {
-      href: '/switch-health',
-      label: 'Switch & Rail Health',
-      icon: Radio,
-      badge: hasDegradedSwitch ? 'FAILOVER' : undefined,
-      badgeColor: 'blue',
-    },
-    {
-      href: '/compliance',
-      label: 'Compliance & Gating',
-      icon: ShieldCheck,
-      badge: undefined,
-    },
-    {
-      href: '/active-channels',
-      label: 'Active Channels',
-      icon: PhoneCall,
-      badge: undefined,
-    },
-    {
-      href: '/audit-ledger',
-      label: 'Cryptographic Ledger',
-      icon: Link2,
-      badge: 'SHA-256',
-      badgeColor: 'slate',
+      title: 'Interactive Sandbox',
+      items: [
+        {
+          href: '/test-runner',
+          label: 'Single Case Simulator',
+          icon: FlaskConical,
+          badge: 'SANDBOX',
+          badgeColor: 'slate',
+        },
+      ],
     },
   ];
 
@@ -92,8 +120,8 @@ export const NavRail: React.FC = () => {
       {/* Brand Header */}
       <div>
         <div className="p-5 border-b border-glass-border">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-md bg-brand-blue flex items-center justify-center font-bold text-white shadow-blue-glow">
+          <Link href="/" className="flex items-center gap-2.5 group">
+            <div className="w-8 h-8 rounded-md bg-brand-blue flex items-center justify-center font-bold text-white shadow-blue-glow group-hover:scale-105 transition-transform">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.0001 2L2 19.5H7.5L12.0001 11.5L16.5 19.5H22L12.0001 2Z" />
               </svg>
@@ -102,69 +130,70 @@ export const NavRail: React.FC = () => {
               <div className="font-semibold text-sm tracking-tight text-text-primary flex items-center gap-1.5">
                 Razorpay
                 <span className="text-[10px] uppercase font-mono px-1 py-0.5 rounded bg-brand-navy border border-brand-blue/30 text-brand-blue">
-                  Agent
+                  Recovery
                 </span>
               </div>
               <div className="text-[11px] text-text-tertiary font-mono tracking-wider uppercase">
-                Revenue Recovery NOC
+                Autonomous Ops Deck
               </div>
             </div>
-          </div>
+          </Link>
         </div>
 
-        {/* Primary Navigation List */}
-        <nav className="p-3 space-y-1">
-          <div className="px-3 py-1.5 text-[11px] font-mono uppercase tracking-wider text-text-tertiary">
-            Operations Blotter
-          </div>
+        {/* Structured Navigation Sections */}
+        <nav className="p-3 space-y-4">
+          {navSections.map((section) => (
+            <div key={section.title} className="space-y-1">
+              <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-text-tertiary font-semibold">
+                {section.title}
+              </div>
 
-          {navItems.map((item) => {
-            const isActive = pathname === item.href;
-            const Icon = item.icon;
+              {section.items.map((item) => {
+                const isActive = pathname === item.href;
+                const Icon = item.icon;
 
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                className={clsx(
-                  'flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-all group',
-                  item.highlight && !isActive
-                    ? 'border border-brand-blue/40 bg-brand-blue/10 text-text-primary hover:bg-brand-blue/20'
-                    : '',
-                  isActive
-                    ? 'bg-brand-blue/15 text-brand-blue border border-brand-blue/30 shadow-[0_0_12px_var(--brand-blue-glow)]'
-                    : 'text-text-secondary hover:text-text-primary hover:bg-glass-bg border border-transparent'
-                )}
-              >
-                <div className="flex items-center gap-2.5">
-                  <Icon
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
                     className={clsx(
-                      'w-4 h-4 transition-colors',
-                      isActive ? 'text-brand-blue' : item.highlight ? 'text-brand-blue' : 'text-text-tertiary group-hover:text-text-primary'
-                    )}
-                    strokeWidth={1.75}
-                  />
-                  <span className={clsx(item.highlight && 'font-semibold')}>{item.label}</span>
-                </div>
-
-                {item.badge && (
-                  <span
-                    className={clsx(
-                      'text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold',
-                      item.badgeColor === 'amber' &&
-                        'bg-human-amber/20 text-human-amber border border-human-amber/50 shadow-[0_0_8px_var(--human-amber-glow)] animate-pulse',
-                      item.badgeColor === 'blue' &&
-                        'bg-brand-blue/20 text-brand-blue border border-brand-blue/40',
-                      item.badgeColor === 'slate' &&
-                        'bg-neutral-slate/20 text-text-tertiary border border-neutral-slate/40'
+                      'flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-all group',
+                      isActive
+                        ? 'bg-brand-blue/15 text-brand-blue border border-brand-blue/30 shadow-[0_0_12px_var(--brand-blue-glow)]'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-glass-bg border border-transparent'
                     )}
                   >
-                    {item.badge}
-                  </span>
-                )}
-              </Link>
-            );
-          })}
+                    <div className="flex items-center gap-2.5">
+                      <Icon
+                        className={clsx(
+                          'w-4 h-4 transition-colors',
+                          isActive ? 'text-brand-blue' : 'text-text-tertiary group-hover:text-text-primary'
+                        )}
+                        strokeWidth={1.75}
+                      />
+                      <span>{item.label}</span>
+                    </div>
+
+                    {item.badge && (
+                      <span
+                        className={clsx(
+                          'text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold',
+                          item.badgeColor === 'amber' &&
+                            'bg-human-amber/20 text-human-amber border border-human-amber/50 shadow-[0_0_8px_var(--human-amber-glow)] animate-pulse',
+                          item.badgeColor === 'blue' &&
+                            'bg-brand-blue/20 text-brand-blue border border-brand-blue/40',
+                          item.badgeColor === 'slate' &&
+                            'bg-neutral-slate/20 text-text-tertiary border border-neutral-slate/40'
+                        )}
+                      >
+                        {item.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
+          ))}
         </nav>
       </div>
 
@@ -183,23 +212,9 @@ export const NavRail: React.FC = () => {
           </span>
         </div>
 
-        {/* Impact Report Link (Hackathon Collateral — marked clearly) */}
-        <Link
-          href="/impact-report"
-          className="flex items-center justify-between px-3 py-2 rounded-md text-[11px] font-mono text-text-tertiary hover:text-brand-blue hover:bg-glass-bg transition-colors border border-transparent hover:border-brand-blue/30"
-        >
-          <div className="flex items-center gap-2">
-            <FileText className="w-3.5 h-3.5" />
-            <span>Impact Report (RCT)</span>
-          </div>
-          <span className="text-[9px] uppercase px-1 py-0.2 rounded bg-neutral-slate/20 text-text-tertiary">
-            Hackathon
-          </span>
-        </Link>
-
         {/* Theme & Mode Bar */}
         <div className="flex items-center justify-between px-1 pt-1 text-[11px] text-text-tertiary">
-          <span className="font-mono">v1.0-cmd</span>
+          <span className="font-mono">v2.0-engine</span>
           <button
             onClick={toggleTheme}
             className="flex items-center gap-1.5 hover:text-text-primary transition-colors"

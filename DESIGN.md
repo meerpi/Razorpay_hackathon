@@ -9,10 +9,10 @@
 
 The **Razorpay Autonomous AI Revenue Recovery Agent** console is an event-driven, transaction-by-transaction operational command deck. It monitors, classifies, and remediates failed payment events in real time. 
 
-### Core Tenet: Operational Console vs. Pitch Deck
-- **The Unit of Product:** Exactly one transaction / one case.
-- **Strict Prohibition:** Aggregate performance numbers (e.g. recovery rate %, total ₹ recovered, "vs. baseline" comparisons, ticking counters, or hero KPI tiles) are strictly prohibited from the operational UI. They obscure individual transaction states and transform an operational tool into an ungrounded presentation slide.
-- **Reporting Separation:** All aggregate benchmark comparisons (e.g. 445% net recovery lift, RCT statistical significance) exist strictly in standalone collateral (`impact_report.md` and dedicated static export `/impact-report`).
+### Core Tenet: Aggregates are a Doorway, Not a Wall
+- **The Dual Audience:** Built for hackathon judges evaluating system efficacy and Razorpay/merchant risk-ops and finance operators whose primary KPI is *"how much revenue did we recover across this batch."*
+- **The Doorway Principle:** The primary landing page (`/`) immediately answers the topline financial question using live metrics from `output/recovery_summary.json` (₹1.66 Cr recovered across 1,500 cases, 44.9% case rate, 64.9% value rate). Every single metric card, product rail, and decline class serves as an interactive doorway that deep-links directly into the filtered transaction blotter at `/queue`.
+- **Verifiable Engine Integration:** The operational UI is wired directly to Python engine outputs (`output/cases.jsonl`, `output/audit_log.jsonl`, `output/benchmark_results.json`) and supports on-demand batch evaluation (`python main.py benchmark 42`).
 
 ---
 

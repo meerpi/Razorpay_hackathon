@@ -29,14 +29,44 @@ export default function AuditLedgerPage() {
   const [samplingNote, setSamplingNote] = useState<string>('');
   const [isSamplingModalOpen, setIsSamplingModalOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    const update = () => {
-      setBlocks([...dataStore.getAuditBlocks()]);
+  const [originalBlocks, setOriginalBlocks] = useState<AuditBlock[]>([]);
+
+  const fetchAuditBlocks = async () => {
+    try {
+      const res = await fetch('/api/engine/audit-log');
+      const data = await res.json();
+      if (data.success && data.blocks && data.blocks.length > 0) {
+        setBlocks(data.blocks);
+        setOriginalBlocks(data.blocks);
+      } else {
+        const fallback = [...dataStore.getAuditBlocks()];
+        setBlocks(fallback);
+        setOriginalBlocks(fallback);
+      }
+    } catch (err) {
+      const fallback = [...dataStore.getAuditBlocks()];
+      setBlocks(fallback);
+      setOriginalBlocks(fallback);
+    }
+  };
+
+  const fetchCases = async () => {
+    try {
+      const res = await fetch('/api/engine/cases?limit=100');
+      const data = await res.json();
+      if (data.success && data.cases) {
+        setCases(data.cases);
+      } else {
+        setCases([...dataStore.getCases()]);
+      }
+    } catch (err) {
       setCases([...dataStore.getCases()]);
-    };
-    update();
-    const unsub = dataStore.subscribe(update);
-    return () => unsub();
+    }
+  };
+
+  useEffect(() => {
+    fetchAuditBlocks();
+    fetchCases();
   }, []);
 
   // Check chain validity
@@ -77,13 +107,24 @@ export default function AuditLedgerPage() {
   }, [blocks, searchQuery]);
 
   const handleTamperTest = () => {
-    if (blocks.length > 1) {
-      dataStore.tamperBlock(blocks[1].index);
+    if (blocks.length > 0) {
+      const targetIdx = blocks.length > 1 ? blocks[1].index : blocks[0].index;
+      const updated = blocks.map((b) => {
+        if (b.index === targetIdx) {
+          return {
+            ...b,
+            isTampered: true,
+            canonicalHash: 'deadbeef' + b.canonicalHash.slice(8),
+          };
+        }
+        return b;
+      });
+      setBlocks(updated);
     }
   };
 
   const handleRestore = () => {
-    dataStore.restoreBlocks();
+    fetchAuditBlocks();
   };
 
   const handleOpenCase = (caseId: string) => {
@@ -96,7 +137,20 @@ export default function AuditLedgerPage() {
 
   const handleSignOffSample = () => {
     if (!sampleCaseId || !samplingNote.trim()) return;
-    dataStore.auditSampleCase(sampleCaseId, samplingNote);
+    const prevBlock = blocks[0];
+    const prevHash = prevBlock ? prevBlock.canonicalHash : '0'.repeat(64);
+    const newBlock: AuditBlock = {
+      index: blocks.length + 1,
+      timestamp: new Date().toISOString(),
+      caseId: sampleCaseId,
+      action: 'governance_audit_sampling_verified',
+      ruleFired: 'rbi_independent_assurance_sampling',
+      reason: `Independent assurance sampling sign-off: "${samplingNote}"`,
+      prevHash,
+      canonicalHash: 'a7f920c841b5d6e2' + Math.floor(Math.random() * 0xffffffffff).toString(16).padStart(48, '0'),
+      payload: { case_id: sampleCaseId, note: samplingNote, auditor: 'Internal Audit' },
+    };
+    setBlocks([newBlock, ...blocks]);
     setIsSamplingModalOpen(false);
     setSamplingNote('');
   };
