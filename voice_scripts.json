@@ -1,0 +1,258 @@
+{
+  "originating_number_series": "1601",
+  "telecom_regulation": "TRAI TCCCPR 2025/2026 - 1601 Series for Private Financial Institutions Service/Transactional Calls",
+  "dpdp_notice": "Personal data processed under Digital Personal Data Protection Act, 2023",
+  "scenarios": [
+    {
+      "name": "successful_recovery",
+      "description": "RPV passes on first attempt, customer agrees to receive UPI payment link",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai. Yeh call recording aur DPDP Act 2023 ke tehat compliance purposes ke liye record ki ja rahi hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Security verification ke liye, kya meri baat {customer_name} ji se ho rahi hai? Kripya apni date of birth ya card ke aakhri 4 digits confirm karein."
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_confirm",
+          "text": "Haan, main {customer_name} bol raha hoon. Meri date of birth {dob} hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "LENDER_DISCLOSURE",
+          "text": "Dhanyavaad verification ke liye, {customer_name} ji. Yeh call Razorpay Merchants ki taraf se aapke recent order ke regarding hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "PAYMENT_DISCUSSION",
+          "text": "Aapka {amount} rupaye ka payment due hai. Kya hum aapko turant pay karne ke liye UPI payment link bhej dein?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RESOLUTION_ATTEMPT",
+          "intent": "agree_payment_link",
+          "text": "Haan, please WhatsApp aur SMS par payment link bhej dijiye."
+        },
+        {
+          "speaker": "bot",
+          "state": "CALL_COMPLETE",
+          "text": "Payment link aapke registered mobile number par bhej diya gaya hai. Kripya 15 minute ke andar payment complete karein. Dhanyavaad!"
+        }
+      ]
+    },
+    {
+      "name": "rpv_failed",
+      "description": "Third-party answers; bot terminates without disclosing any debt details",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai. Yeh call quality and compliance ke liye record ki ja rahi hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Kya meri baat {customer_name} ji se ho rahi hai?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_wrong_person",
+          "text": "Nahi, yeh unka number nahi hai. Main unka dost hoon, woh abhi yahan nahi hain."
+        },
+        {
+          "speaker": "bot",
+          "state": "CALL_FAILED",
+          "sub_reason": "rpv_failed",
+          "text": "Shukriya batane ke liye. Hum baad mein dobara contact karenge. Have a good day."
+        }
+      ]
+    },
+    {
+      "name": "rpv_retry_then_success",
+      "description": "First RPV attempt fails/misheard, bounded retry succeeds on attempt 2 with last-4 digits",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai. Yeh call DPDP compliance ke tehat record ki ja rahi hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Kya main {customer_name} ji se baat kar raha hoon? Kripya apni date of birth confirm karein."
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_unclear",
+          "text": "Hello? Awaaz saaf nahi hai, kya bola aapne?"
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "action": "rpv_retry_prompt",
+          "retry_count": 1,
+          "text": "Koi baat nahi ji. Identity verification ke liye, kya aap apne registered payment card ke aakhri 4 digits bata sakte hain?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_confirm_last4",
+          "text": "Haan, card ke last four digits {last4} hain."
+        },
+        {
+          "speaker": "bot",
+          "state": "LENDER_DISCLOSURE",
+          "text": "Dhanyavaad, verification safal hua {customer_name} ji. Yeh call Razorpay Merchants ki taraf se hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "PAYMENT_DISCUSSION",
+          "text": "Aapka {amount} rupaye ka payment due hai. Kya aap abhi UPI ya Netbanking se clear karna chahenge?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RESOLUTION_ATTEMPT",
+          "intent": "agree_payment_link",
+          "text": "Haan link bhej do, main gpay se kar deta hoon."
+        },
+        {
+          "speaker": "bot",
+          "state": "CALL_COMPLETE",
+          "text": "Link send kar diya gaya hai. Dhanyavaad aapka."
+        }
+      ]
+    },
+    {
+      "name": "human_escalation_requested",
+      "description": "Customer requests to speak with a human agent; immediate seamless handoff",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai. Call recording DPDP Act compliance ke tehat hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Kya meri baat {customer_name} ji se ho rahi hai?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_confirm",
+          "text": "Haan main hi bol raha hoon."
+        },
+        {
+          "speaker": "bot",
+          "state": "LENDER_DISCLOSURE",
+          "text": "Shukriya {customer_name} ji. Hum Razorpay Merchants account support se baat kar rahe hain."
+        },
+        {
+          "speaker": "bot",
+          "state": "PAYMENT_DISCUSSION",
+          "text": "Aapka {amount} ka payment transaction pending hai."
+        },
+        {
+          "speaker": "customer",
+          "state": "PAYMENT_DISCUSSION",
+          "intent": "request_human",
+          "text": "Mujhe bot se baat nahi karni. Mujhe kisi customer service agent se baat karni hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "HUMAN_ESCALATION",
+          "text": "Zaroor {customer_name} ji. Main aapki call turant hamare senior customer executive ko transfer kar raha hoon. Kripya line par bane rahein."
+        }
+      ]
+    },
+    {
+      "name": "dispute_logged",
+      "description": "Customer claims payment was already settled; dispute is logged for manual review",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Verification ke liye, kya aap {customer_name} ji hain?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_confirm",
+          "text": "Haan ji, main {customer_name} hoon."
+        },
+        {
+          "speaker": "bot",
+          "state": "LENDER_DISCLOSURE",
+          "text": "Dhanyavaad. Yeh call Razorpay Merchants se aapke pending amount ke baare mein hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "PAYMENT_DISCUSSION",
+          "text": "Aapke account mein {amount} rupaye ka payment overdue show ho raha hai."
+        },
+        {
+          "speaker": "customer",
+          "state": "RESOLUTION_ATTEMPT",
+          "intent": "dispute",
+          "text": "Arey maine toh yeh payment kal subah hi bank se transfer kar diya tha! Mere account se paise kat chuke hain."
+        },
+        {
+          "speaker": "bot",
+          "state": "DISPUTE_LOGGED",
+          "text": "Theek hai {customer_name} ji, humne aapka dispute aur payment claim record kar liya hai. Hamari reconciliation team iski jaanch karegi aur 24 ghante mein update karegi. Tab tak ke liye saari automated calls roki jaati hain. Shukriya."
+        }
+      ]
+    },
+    {
+      "name": "opt_out_callback",
+      "description": "Customer requests to opt out of voice calls; persistent suppression list updated",
+      "turns": [
+        {
+          "speaker": "bot",
+          "state": "GENERIC_DISCLOSURE",
+          "text": "Namaste. Yeh call ek financial services company ki taraf se automated assistant se hai."
+        },
+        {
+          "speaker": "bot",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "text": "Kya main {customer_name} ji se baat kar raha hoon?"
+        },
+        {
+          "speaker": "customer",
+          "state": "RIGHT_PARTY_VERIFICATION",
+          "intent": "rpv_confirm",
+          "text": "Haan {customer_name} bol raha hoon."
+        },
+        {
+          "speaker": "bot",
+          "state": "LENDER_DISCLOSURE",
+          "text": "Dhanyavaad. Razorpay Merchants ki taraf se aapka {amount} ka payment reminder hai."
+        },
+        {
+          "speaker": "customer",
+          "state": "RESOLUTION_ATTEMPT",
+          "intent": "opt_out",
+          "text": "Mujhe phone mat karo baar baar. Mujhe koi call nahi chahiye, jo bhi bhejna hai SMS ya WhatsApp par bhej do."
+        },
+        {
+          "speaker": "bot",
+          "state": "OPT_OUT_RECORDED",
+          "text": "Aapki request note kar li gayi hai {customer_name} ji. Aapko aage se voice calls nahi ki jayengi, aur details sirf SMS par bheji jayengi. Dhanyavaad."
+        }
+      ]
+    }
+  ]
+}

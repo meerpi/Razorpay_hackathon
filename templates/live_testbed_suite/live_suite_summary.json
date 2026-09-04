@@ -1,0 +1,48 @@
+{
+  "plan_create": {
+    "status": "FAILED",
+    "error": "",
+    "error_type": "ServerError"
+  },
+  "customer_create": {
+    "status": "SUCCESS",
+    "id": "cust_TVYibhz6RAOflO",
+    "data": {
+      "id": "cust_TVYibhz6RAOflO",
+      "entity": "customer",
+      "name": "Aarav Sharma",
+      "email": "aarav.sharma.test@example.com",
+      "contact": "+919876543210",
+      "gstin": null,
+      "notes": {
+        "test_run": "full_suite_test"
+      },
+      "shipping_address": [],
+      "created_at": 1788000721
+    }
+  },
+  "subscription_create": {
+    "status": "SKIPPED",
+    "reason": "No plan_id"
+  },
+  "orders": {
+    "status": "SUCCESS",
+    "order_id": "order_TVYibmc4MiB77s",
+    "count": 5
+  },
+  "payments": {
+    "status": "SUCCESS",
+    "total": 4,
+    "failed": 3,
+    "captured": 1
+  },
+  "invoices": {
+    "status": "SUCCESS",
+    "count": 0
+  },
+  "subscriptions_list": {
+    "status": "FAILED",
+    "error": "",
+    "error_type": "ServerError"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "amount": 50000,
+  "amount_due": 50000,
+  "amount_paid": 0,
+  "attempts": 0,
+  "created_at": 1787983129,
+  "currency": "INR",
+  "entity": "order",
+  "id": "order_TVTisX40EDwSJT",
+  "notes": {
+    "purpose": "testbed_capture"
+  },
+  "offer_id": null,
+  "receipt": "testbed_order_success",
+  "status": "created"
+}

@@ -1,0 +1,202 @@
+[
+  {
+    "card": {
+      "name": "insufficient_funds",
+      "network": "visa",
+      "number": "4100280000080001",
+      "error_reason": "insufficient_funds",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985898,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVdVGnmxSlMP",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_insufficient_funds",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "payment_timed_out",
+      "network": "visa",
+      "number": "4100280000090000",
+      "error_reason": "payment_timed_out",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985899,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVekI4mdMLL0",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_payment_timed_out",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "card_declined",
+      "network": "visa",
+      "number": "4100280000060003",
+      "error_reason": "card_declined",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985900,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVfwxCuSvsGl",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_card_declined",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "payment_cancelled",
+      "network": "visa",
+      "number": "4100280000070002",
+      "error_reason": "payment_cancelled",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985901,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVh8YiAtK3mT",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_payment_cancelled",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "gateway_technical_error",
+      "network": "visa",
+      "number": "4100280000020007",
+      "error_reason": "gateway_technical_error",
+      "error_code": "GATEWAY_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985903,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUViMUQGqLhw9",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_gateway_technical_error",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "card_disabled",
+      "network": "visa",
+      "number": "4100280000030006",
+      "error_reason": "card_disabled_for_online_payments",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985904,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVjaleBC9yGR",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_card_disabled",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "authentication_failed",
+      "network": "visa",
+      "number": "4100280000000009",
+      "error_reason": "authentication_failed",
+      "error_code": "GATEWAY_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985905,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVklV2s8ysqI",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_authentication_failed",
+      "status": "created"
+    }
+  },
+  {
+    "card": {
+      "name": "card_number_invalid",
+      "network": "visa",
+      "number": "4100280000010008",
+      "error_reason": "card_number_invalid",
+      "error_code": "BAD_REQUEST_ERROR"
+    },
+    "order": {
+      "amount": 50000,
+      "amount_due": 50000,
+      "amount_paid": 0,
+      "attempts": 0,
+      "created_at": 1787985906,
+      "currency": "INR",
+      "entity": "order",
+      "id": "order_TVUVm0J5tuXqTg",
+      "notes": {
+        "purpose": "testbed_failure_capture"
+      },
+      "offer_id": null,
+      "receipt": "testbed_fail_card_number_invalid",
+      "status": "created"
+    }
+  }
+]

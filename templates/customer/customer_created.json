@@ -1,0 +1,13 @@
+{
+  "id": "cust_TVTixkjE7IsG9W",
+  "entity": "customer",
+  "name": "Test Customer",
+  "email": "testbed@example.com",
+  "contact": "9876543210",
+  "gstin": null,
+  "notes": {
+    "purpose": "testbed_capture"
+  },
+  "shipping_address": [],
+  "created_at": 1787983133
+}

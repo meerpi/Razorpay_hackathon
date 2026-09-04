@@ -1,0 +1,48 @@
+{
+  "id": "pay_TVUdcYtN7FMvYH",
+  "entity": "payment",
+  "amount": 50000,
+  "currency": "INR",
+  "status": "failed",
+  "order_id": "order_TVUVdVGnmxSlMP",
+  "invoice_id": null,
+  "international": false,
+  "method": "card",
+  "amount_refunded": 0,
+  "refund_status": null,
+  "captured": false,
+  "description": "Failure test: insufficient_funds",
+  "card_id": "card_TVUdcoI31pFmln",
+  "card": {
+    "id": "card_TVUdcoI31pFmln",
+    "entity": "card",
+    "name": "",
+    "last4": "0001",
+    "network": "Visa",
+    "type": "debit",
+    "issuer": "DCBL",
+    "international": false,
+    "emi": false,
+    "sub_type": "consumer",
+    "token_iin": "410028000"
+  },
+  "bank": null,
+  "wallet": null,
+  "vpa": null,
+  "email": "test@example.com",
+  "contact": "+919876543211",
+  "notes": {
+    "purpose": "testbed_failure_capture"
+  },
+  "fee": null,
+  "tax": null,
+  "error_code": "BAD_REQUEST_ERROR",
+  "error_description": "Payment failed",
+  "error_source": "gateway",
+  "error_step": "payment_authorization",
+  "error_reason": "payment_failed",
+  "acquirer_data": {
+    "auth_code": null
+  },
+  "created_at": 1787986353
+}

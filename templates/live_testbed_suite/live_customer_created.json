@@ -1,0 +1,13 @@
+{
+  "id": "cust_TVYibhz6RAOflO",
+  "entity": "customer",
+  "name": "Aarav Sharma",
+  "email": "aarav.sharma.test@example.com",
+  "contact": "+919876543210",
+  "gstin": null,
+  "notes": {
+    "test_run": "full_suite_test"
+  },
+  "shipping_address": [],
+  "created_at": 1788000721
+}

@@ -1,0 +1,14 @@
+[
+  {
+    "phone": "+919876543210",
+    "case_id": "demo-case-001",
+    "opted_out_at": "2026-09-03T02:06:35.427513+05:30",
+    "reason": "Customer voice call opt-out"
+  },
+  {
+    "phone": "+919900112233",
+    "case_id": "c1",
+    "opted_out_at": "2026-09-03T02:09:49.128734+05:30",
+    "reason": "Customer voice call opt-out"
+  }
+]
