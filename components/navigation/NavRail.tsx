@@ -201,8 +201,8 @@ export const NavRail: React.FC = () => {
         <div className="p-2.5 rounded-xs surface-panel border border-border-subtle flex items-center justify-between text-[11px] font-mono">
           <div className="flex items-center gap-2">
             <span className="w-2 h-2 rounded-full bg-positive-default" />
-            <span className="text-text-secondary truncate max-w-[130px]" title="rzp_test_TVCK6KI3mrkU07">
-              rzp_test_TVCK...
+            <span className="text-text-secondary truncate max-w-[130px]" title="Razorpay Testbed Active">
+              rzp_test_••••••••
             </span>
           </div>
           <span className="text-[9px] uppercase px-1 py-0.5 rounded-xs bg-positive-subtle text-positive-default font-bold">
