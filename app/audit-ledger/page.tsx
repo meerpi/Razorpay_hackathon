@@ -12,10 +12,74 @@ import {
   RotateCcw,
   FileCheck,
   Hash,
+  Copy,
+  Check,
 } from 'lucide-react';
 import { dataStore } from '@/lib/mock-data';
 import { AuditBlock, TransactionCase } from '@/lib/types';
 import { CaseDetailSheet } from '@/components/case-detail/CaseDetailSheet';
+
+const TruncatedHash = ({
+  hash,
+  label,
+  isCorrupted,
+}: {
+  hash: string;
+  label: string;
+  isCorrupted?: boolean;
+}) => {
+  const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
+
+  const displayHash = expanded
+    ? hash
+    : hash && hash.length > 18
+    ? `${hash.slice(0, 10)}...${hash.slice(-8)}`
+    : hash;
+
+  const handleCopy = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!hash) return;
+    navigator.clipboard.writeText(hash);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1500);
+  };
+
+  const handleToggle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setExpanded(!expanded);
+  };
+
+  return (
+    <div className="inline-flex items-center gap-1.5 font-mono text-[10px]">
+      <span className="text-text-tertiary">{label}:</span>
+      <span
+        onClick={handleToggle}
+        title={expanded ? 'Click to collapse hash' : 'Click to expand full 64-char hash'}
+        className={clsx(
+          'cursor-pointer transition-colors select-none font-medium',
+          isCorrupted
+            ? 'text-negative-emphasis font-bold underline'
+            : 'text-text-secondary hover:text-text-primary hover:underline'
+        )}
+      >
+        {displayHash}
+      </span>
+      <button
+        type="button"
+        onClick={handleCopy}
+        title={copied ? 'Copied!' : 'Copy full hash'}
+        className="p-1 rounded hover:bg-canvas-raised text-text-tertiary hover:text-text-primary transition-colors inline-flex items-center"
+      >
+        {copied ? (
+          <Check className="w-2.5 h-2.5 text-positive-default" />
+        ) : (
+          <Copy className="w-2.5 h-2.5" />
+        )}
+      </button>
+    </div>
+  );
+};
 
 export default function AuditLedgerPage() {
   const [blocks, setBlocks] = useState<AuditBlock[]>([]);
@@ -220,7 +284,7 @@ export default function AuditLedgerPage() {
           <div>
             <div className="font-bold text-sm">
               {isValid
-                ? `Cryptographically Verified to Block #${blocks[0]?.index || 0} · 0 Breaches Detected`
+                ? `Cryptographically Verified to Block #${blocks[0]?.index || 0} · 0 Statutory Breaches`
                 : `CRYPTOGRAPHIC INTEGRITY BREACH AT BLOCK #${corruptedBlockIndex}`}
             </div>
             <div className="text-[11px] text-text-secondary mt-0.5">
@@ -232,7 +296,7 @@ export default function AuditLedgerPage() {
         </div>
 
         <div className="text-right">
-          <span className="text-[10px] uppercase px-2 py-0.5 rounded-xs font-semibold bg-canvas border border-border-subtle">
+          <span className="text-[10px] px-2 py-0.5 rounded-xs font-semibold bg-canvas border border-border-subtle">
             Total Blocks: {blocks.length}
           </span>
         </div>
@@ -295,18 +359,17 @@ export default function AuditLedgerPage() {
                 <p className="text-text-primary mt-1 text-xs">{b.reason}</p>
               </div>
 
-              {/* Hashes: Current and Previous */}
-              <div className="pt-2 border-t border-border-subtle grid grid-cols-1 md:grid-cols-2 gap-2 text-[10px] font-mono">
-                <div className="truncate">
-                  <span className="text-text-tertiary">Prev Hash (H_i-1): </span>
-                  <span className="text-text-secondary">{b.prevHash}</span>
-                </div>
-                <div className="truncate text-right">
-                  <span className="text-text-tertiary">Canonical Hash (H_i): </span>
-                  <span className={clsx(isCorrupted ? 'text-negative-emphasis font-bold' : 'text-brand-emphasis font-medium')}>
-                    {b.canonicalHash}
-                  </span>
-                </div>
+              {/* Hashes: Truncated with Copy & Expand Affordance */}
+              <div className="pt-2 border-t border-border-subtle flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-[10px] font-mono">
+                <TruncatedHash
+                  hash={b.prevHash}
+                  label="Prev Hash (H_i-1)"
+                />
+                <TruncatedHash
+                  hash={b.canonicalHash}
+                  label="Canonical Hash (H_i)"
+                  isCorrupted={isCorrupted}
+                />
               </div>
             </div>
           );
@@ -339,8 +402,8 @@ export default function AuditLedgerPage() {
 
             <div className="space-y-3 text-xs font-mono">
               <div>
-                <label className="text-[11px] text-text-tertiary uppercase block mb-1">
-                  Sampled Case ID:
+                <label className="text-[11px] text-text-secondary block mb-1 font-medium">
+                  Sampled case ID:
                 </label>
                 <select
                   value={sampleCaseId}
@@ -358,8 +421,8 @@ export default function AuditLedgerPage() {
               </div>
 
               <div>
-                <label className="text-[11px] text-text-tertiary uppercase block mb-1">
-                  Auditor Assurance Note:
+                <label className="text-[11px] text-text-secondary block mb-1 font-medium">
+                  Auditor assurance note:
                 </label>
                 <textarea
                   value={samplingNote}

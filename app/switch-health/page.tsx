@@ -11,6 +11,16 @@ import { dataStore } from '@/lib/mock-data';
 import { SwitchHealth } from '@/lib/types';
 import { GlassCard } from '@/components/ui/GlassCard';
 
+const formatMethod = (method: string) => {
+  if (!method) return '';
+  const m = method.toLowerCase();
+  if (m === 'netbanking') return 'Netbanking';
+  if (m === 'card') return 'Cards';
+  if (m === 'upi') return 'UPI';
+  if (m === 'emandate') return 'e-Mandate';
+  return method.charAt(0).toUpperCase() + method.slice(1).toLowerCase();
+};
+
 export default function SwitchHealthPage() {
   const [switches, setSwitches] = useState<SwitchHealth[]>([]);
 
@@ -72,19 +82,19 @@ export default function SwitchHealthPage() {
                     <span className="text-sm font-semibold text-text-primary tracking-tight">
                       {sw.name}
                     </span>
-                    <span className="font-mono text-[10px] uppercase px-1.5 py-0.5 rounded-xs bg-canvas-raised border border-border-subtle text-text-tertiary">
+                    <span className="font-mono text-[10px] px-1.5 py-0.5 rounded-xs bg-canvas-raised border border-border-subtle text-text-tertiary">
                       {sw.issuer}
                     </span>
                   </div>
                   <div className="text-[11px] font-mono text-text-tertiary mt-0.5">
-                    Instrument: <span className="uppercase text-text-secondary">{sw.method}</span>
+                    Instrument: <span className="text-text-secondary font-sans font-medium">{formatMethod(sw.method)}</span>
                   </div>
                 </div>
 
                 {/* Status Indicator */}
                 <span
                   className={clsx(
-                    'text-[10px] font-mono font-semibold uppercase px-2 py-0.5 rounded-xs border flex items-center gap-1.5',
+                    'text-[10px] font-mono font-semibold px-2 py-0.5 rounded-xs border flex items-center gap-1.5',
                     isDegraded
                       ? 'bg-attention-subtle text-attention-emphasis border-attention-muted'
                       : 'bg-positive-subtle text-positive-emphasis border-positive-muted'
@@ -96,14 +106,14 @@ export default function SwitchHealthPage() {
                       isDegraded ? 'bg-attention-default' : 'bg-positive-default'
                     )}
                   />
-                  {sw.status}
+                  {isDegraded ? 'Degraded' : 'Operational'}
                 </span>
               </div>
 
               {/* Success Rate & Latency Readings */}
               <div className="grid grid-cols-2 gap-3 pt-2 border-t border-border-subtle">
                 <div>
-                  <div className="text-[10px] font-mono text-text-tertiary uppercase">
+                  <div className="text-[10px] font-mono text-text-tertiary">
                     Success Rate
                   </div>
                   <div className="flex items-baseline gap-1.5 mt-0.5">
@@ -131,7 +141,7 @@ export default function SwitchHealthPage() {
                 </div>
 
                 <div>
-                  <div className="text-[10px] font-mono text-text-tertiary uppercase">
+                  <div className="text-[10px] font-mono text-text-tertiary">
                     Average Latency
                   </div>
                   <div className="flex items-baseline gap-1 mt-0.5">

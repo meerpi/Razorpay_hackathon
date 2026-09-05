@@ -18,6 +18,23 @@ import { ActiveVoiceCall, ActivePayLink, PtpCommitment, TransactionCase } from '
 import { CaseDetailSheet } from '@/components/case-detail/CaseDetailSheet';
 import { MonospaceAmount } from '@/components/ui/MonospaceAmount';
 
+const formatVoiceState = (state: string) => {
+  switch (state) {
+    case 'HUMAN_ESCALATION':
+      return 'Human Escalation';
+    case 'RIGHT_PARTY_VERIFICATION':
+      return 'Right-Party Verification';
+    case 'PAYMENT_DISCUSSION':
+      return 'Payment Discussion';
+    case 'PTP_NEGOTIATION':
+      return 'PTP Negotiation';
+    case 'DISPUTE_RESOLUTION':
+      return 'Dispute Resolution';
+    default:
+      return state.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  }
+};
+
 export default function ActiveChannelsPage() {
   const [voiceCalls, setVoiceCalls] = useState<ActiveVoiceCall[]>([]);
   const [payLinks, setPayLinks] = useState<ActivePayLink[]>([]);
@@ -105,7 +122,7 @@ export default function ActiveChannelsPage() {
       {/* ── TAB 1: VOICEBOT FLEET ────────────────────────────────────────── */}
       {activeTab === 'voice' && (
         <div className="space-y-3">
-          <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary">
+          <div className="text-xs font-medium text-text-tertiary">
             Active Telephony Sessions (TRAI 1601 Header · Hinglish NLP · RPV Enforced)
           </div>
 
@@ -150,13 +167,13 @@ export default function ActiveChannelsPage() {
                       <MonospaceAmount amountRupees={call.amountRupees} size="md" />
                       <span
                         className={clsx(
-                          'px-2.5 py-1 rounded-xs text-xs font-mono font-semibold uppercase',
+                          'px-2.5 py-1 rounded-xs text-xs font-mono font-semibold',
                           isHumanEscalation
                             ? 'bg-attention-subtle text-attention-emphasis border border-attention-muted'
                             : 'bg-brand-subtle text-brand-emphasis border border-brand-muted'
                         )}
                       >
-                        {call.state}
+                        {formatVoiceState(call.state)}
                       </span>
                     </div>
                   </div>
@@ -180,23 +197,23 @@ export default function ActiveChannelsPage() {
       {/* ── TAB 2: SMART PAYLINKS ───────────────────────────────────────── */}
       {activeTab === 'links' && (
         <div className="space-y-3">
-          <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary">
+          <div className="text-xs font-medium text-text-tertiary">
             Pending Dynamic PayLinks (Pre-filled 1-Click Razorpay Checkout)
           </div>
 
           <div className="overflow-hidden rounded-md border border-border-subtle surface-panel">
             <table className="w-full text-left font-mono text-xs">
               <thead>
-                <tr className="border-b border-border-subtle text-[10px] uppercase text-text-tertiary bg-canvas-raised">
+                <tr className="border-b border-border-subtle text-xs font-medium text-text-tertiary bg-canvas-raised">
                   <th className="py-3 px-4">Customer</th>
                   <th className="py-3 px-4">Short URL</th>
                   <th className="py-3 px-4 text-right">Amount</th>
                   <th className="py-3 px-4">Channel</th>
-                  <th className="py-3 px-4">Expires In</th>
+                  <th className="py-3 px-4">Expires in</th>
                   <th className="py-3 px-4 text-right">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-border-subtle">
+              <tbody className="divide-y border-border-subtle">
                 {payLinks.map((link) => (
                   <tr
                     key={link.linkId}
@@ -218,7 +235,7 @@ export default function ActiveChannelsPage() {
                     <td className="py-3 px-4 text-text-secondary">{link.channel}</td>
                     <td className="py-3 px-4 text-text-tertiary">{link.expiresInMinutes} mins</td>
                     <td className="py-3 px-4 text-right">
-                      <span className="px-2 py-0.5 rounded-xs text-[10px] uppercase font-semibold bg-brand-subtle text-brand-emphasis border border-brand-muted">
+                      <span className="px-2 py-0.5 rounded-xs text-[11px] font-semibold bg-brand-subtle text-brand-emphasis border border-brand-muted capitalize">
                         {link.status}
                       </span>
                     </td>
@@ -233,7 +250,7 @@ export default function ActiveChannelsPage() {
       {/* ── TAB 3: PTP COMMITMENTS ──────────────────────────────────────── */}
       {activeTab === 'ptp' && (
         <div className="space-y-3">
-          <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary">
+          <div className="text-xs font-medium text-text-tertiary">
             Promise-to-Pay Commitments (24-Hour Grace Period Enforced)
           </div>
 
@@ -263,13 +280,13 @@ export default function ActiveChannelsPage() {
                       <MonospaceAmount amountRupees={p.amountRupees} size="md" />
                       <span
                         className={clsx(
-                          'px-2.5 py-0.5 rounded text-xs font-mono font-semibold uppercase',
-                          isKept && 'bg-success-teal/20 text-success-teal border border-success-teal/40',
-                          isBroken && 'bg-danger-crimson/20 text-danger-crimson border border-danger-crimson/40',
-                          !isKept && !isBroken && 'bg-brand-blue/20 text-brand-blue border border-brand-blue/40'
+                          'px-2.5 py-0.5 rounded-xs text-xs font-mono font-semibold',
+                          isKept && 'bg-positive-subtle text-positive-emphasis border border-positive-muted',
+                          isBroken && 'bg-negative-subtle text-negative-emphasis border border-negative-muted',
+                          !isKept && !isBroken && 'bg-brand-subtle text-brand-emphasis border border-brand-muted'
                         )}
                       >
-                        {p.status}
+                        {isKept ? 'Kept' : isBroken ? 'Broken' : 'Pending'}
                       </span>
                     </div>
                   </div>

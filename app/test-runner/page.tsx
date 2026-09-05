@@ -112,15 +112,15 @@ export default function TestLabPage() {
         {/* Left Form: 5 cols */}
         <div className="lg:col-span-5 space-y-4">
           <form onSubmit={handleRunRealCase} className="p-5 rounded-md surface-panel space-y-4 text-xs font-mono">
-            <div className="text-xs uppercase font-bold text-text-primary border-b border-border-subtle pb-2 flex items-center justify-between">
-              <span>Input Test Parameters</span>
-              <span className="text-[10px] text-text-tertiary">Simulation Parameters</span>
+            <div className="text-xs font-semibold text-text-primary border-b border-border-subtle pb-2 flex items-center justify-between">
+              <span>Input test parameters</span>
+              <span className="text-[10px] text-text-tertiary font-normal">Simulation parameters</span>
             </div>
 
             {/* Customer Phone */}
             <div className="space-y-1.5">
-              <label className="text-text-tertiary uppercase block">
-                Customer Phone Number <span className="text-brand-blue">*</span>
+              <label className="text-text-secondary block font-medium">
+                Customer phone number <span className="text-brand-default">*</span>
               </label>
               <input
                 type="text"
@@ -128,36 +128,36 @@ export default function TestLabPage() {
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="+919876543210"
                 required
-                className="w-full bg-canvas border border-glass-border rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-mono"
+                className="w-full bg-canvas border border-border-subtle rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-default font-mono"
               />
               <p className="text-[10px] text-text-tertiary font-sans">
-                Try <code className="text-human-amber">+919876543210</code> to test DNC suppression, or your own number.
+                Try <code className="text-attention-emphasis">+919876543210</code> to test DNC suppression, or your own number.
               </p>
             </div>
 
             {/* Customer Name */}
             <div className="space-y-1.5">
-              <label className="text-text-tertiary uppercase block">Customer Full Name</label>
+              <label className="text-text-secondary block font-medium">Customer full name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="Customer Name"
                 required
-                className="w-full bg-canvas border border-glass-border rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-sans"
+                className="w-full bg-canvas border border-border-subtle rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-default font-sans"
               />
             </div>
 
             {/* Amount */}
             <div className="space-y-1.5">
-              <label className="text-text-tertiary uppercase block">Amount in ₹ (INR)</label>
+              <label className="text-text-secondary block font-medium">Amount in ₹ (INR)</label>
               <input
                 type="number"
                 value={amountRupees}
                 onChange={(e) => setAmountRupees(Number(e.target.value))}
                 min={1}
                 required
-                className="w-full bg-canvas border border-glass-border rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-mono tabular-nums"
+                className="w-full bg-canvas border border-border-subtle rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-default font-mono tabular-nums"
               />
               <p className="text-[10px] text-text-tertiary font-sans">
                 Amounts &gt; ₹15,000 on mandates trigger statutory AFA 2FA ceiling.
@@ -166,11 +166,11 @@ export default function TestLabPage() {
 
             {/* Decline Reason */}
             <div className="space-y-1.5">
-              <label className="text-text-tertiary uppercase block">Decline Reason &amp; Scenario</label>
+              <label className="text-text-secondary block font-medium">Decline reason &amp; scenario</label>
               <select
                 value={errorReason}
                 onChange={(e) => setErrorReason(e.target.value)}
-                className="w-full bg-canvas border border-glass-border rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-mono"
+                className="w-full bg-canvas border border-border-subtle rounded-md px-3 py-2 text-text-primary text-xs focus:outline-none focus:border-brand-default font-mono"
               >
                 {declineOptions.map((opt) => (
                   <option key={opt.value} value={opt.value}>
@@ -183,11 +183,11 @@ export default function TestLabPage() {
             {/* Case Type & Method */}
             <div className="grid grid-cols-2 gap-2">
               <div className="space-y-1">
-                <label className="text-text-tertiary uppercase block text-[10px]">Case Type</label>
+                <label className="text-text-secondary block font-medium text-[11px]">Case type</label>
                 <select
                   value={caseType}
                   onChange={(e) => setCaseType(e.target.value)}
-                  className="w-full bg-canvas border border-glass-border rounded-md px-2 py-1.5 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-mono"
+                  className="w-full bg-canvas border border-border-subtle rounded-md px-2 py-1.5 text-text-primary text-xs focus:outline-none focus:border-brand-default font-mono"
                 >
                   <option value="mandate">Mandate</option>
                   <option value="payment">One-Off Payment</option>
@@ -198,11 +198,11 @@ export default function TestLabPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-text-tertiary uppercase block text-[10px]">Payment Method</label>
+                <label className="text-text-secondary block font-medium text-[11px]">Payment method</label>
                 <select
                   value={method}
                   onChange={(e) => setMethod(e.target.value)}
-                  className="w-full bg-canvas border border-glass-border rounded-md px-2 py-1.5 text-text-primary text-xs focus:outline-none focus:border-brand-blue font-mono"
+                  className="w-full bg-canvas border border-border-subtle rounded-md px-2 py-1.5 text-text-primary text-xs focus:outline-none focus:border-brand-default font-mono"
                 >
                   <option value="emandate">E-Mandate</option>
                   <option value="card">Card</option>
@@ -350,7 +350,7 @@ export default function TestLabPage() {
               {result.payment_link ? (
                 <div className="p-3.5 rounded-lg border border-positive-muted bg-positive-subtle space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-bold text-positive-default flex items-center gap-1.5">
+                    <span className="text-xs font-semibold text-positive-default flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4" />
                       <span>Razorpay Smart PayLink Generated</span>
                     </span>
@@ -371,7 +371,7 @@ export default function TestLabPage() {
                 </div>
               ) : (
                 <div className="p-3 rounded-lg border border-neutral-slate/40 bg-canvas space-y-1">
-                  <span className="text-[11px] text-text-tertiary uppercase">Payment Link Status:</span>
+                  <span className="text-xs font-medium text-text-tertiary">Payment link status:</span>
                   <p className="text-[11px] text-text-secondary">
                     {result.is_suppressed
                       ? 'No link generated: Customer phone is in DNC suppression list.'
@@ -381,18 +381,18 @@ export default function TestLabPage() {
               )}
 
               {/* Statutory Gating Breakdown */}
-              <div className="space-y-1.5 pt-2 border-t border-glass-border">
-                <div className="text-[11px] text-text-tertiary uppercase font-bold">
-                  Statutory Invariants Evaluated by Backend:
+              <div className="space-y-1.5 pt-2 border-t border-border-subtle">
+                <div className="text-xs font-medium text-text-tertiary">
+                  Statutory invariants evaluated by backend:
                 </div>
                 <div className="space-y-1 text-[11px]">
                   {Object.entries(result.compliance_checks || {}).map(([key, gate]: any) => (
                     <div key={key} className="flex items-center justify-between p-1.5 rounded bg-canvas/60">
                       <span className="text-text-secondary">
-                        {gate.passed ? '✓' : '⚠'} {key.replace('_', ' ').toUpperCase()}
+                        {gate.passed ? '✓' : '⚠'} {key.replace(/_/g, ' ')}
                       </span>
-                      <span className={clsx('font-bold', gate.passed ? 'text-success-teal' : 'text-human-amber')}>
-                        {gate.passed ? 'PASSED' : 'FLAGGED'}
+                      <span className={clsx('font-semibold', gate.passed ? 'text-positive-default' : 'text-attention-default')}>
+                        {gate.passed ? 'Passed' : 'Flagged'}
                       </span>
                     </div>
                   ))}
@@ -401,24 +401,24 @@ export default function TestLabPage() {
 
               {/* Hinglish Voicebot FSM Speech Script */}
               {result.voice_script && (
-                <div className="p-3 rounded-lg bg-canvas-raised border border-glass-border space-y-1">
-                  <div className="flex items-center gap-1.5 text-[11px] text-text-tertiary uppercase">
-                    <PhoneCall className="w-3.5 h-3.5 text-human-amber" />
-                    <span>Hinglish Voicebot FSM Generated Speech:</span>
+                <div className="p-3 rounded-lg bg-canvas-raised border border-border-subtle space-y-1">
+                  <div className="flex items-center gap-1.5 text-xs font-medium text-text-tertiary">
+                    <PhoneCall className="w-3.5 h-3.5 text-attention-default" />
+                    <span>Hinglish voicebot FSM generated speech:</span>
                   </div>
                   <p className="text-[11px] text-text-primary italic font-sans">&quot;{result.voice_script}&quot;</p>
                 </div>
               )}
 
               {/* Decisions Trail */}
-              <div className="space-y-1 pt-2 border-t border-glass-border">
-                <div className="text-[11px] text-text-tertiary uppercase font-bold">
-                  Decisions Logged by Engine:
+              <div className="space-y-1 pt-2 border-t border-border-subtle">
+                <div className="text-xs font-medium text-text-tertiary">
+                  Decisions logged by engine:
                 </div>
                 <div className="space-y-1 text-[11px]">
                   {result.decisions?.map((d: any, idx: number) => (
-                    <div key={idx} className="p-1.5 rounded bg-canvas/40 border border-glass-border">
-                      <span className="text-brand-blue font-semibold uppercase">{d.action}:</span>{' '}
+                    <div key={idx} className="p-1.5 rounded bg-canvas/40 border border-border-subtle">
+                      <span className="text-brand-default font-medium">{d.action}:</span>{' '}
                       <span className="text-text-secondary">{d.reason}</span>
                     </div>
                   ))}

@@ -57,25 +57,25 @@ export default function ImpactReportPage() {
       {/* Top Comparison Cards: Control vs Treatment */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <GlassCard padding="md" className="space-y-1">
-          <div className="text-[10px] font-mono uppercase text-text-tertiary">Net Recovery Lift</div>
+          <div className="text-xs font-medium text-text-tertiary">Net Recovery Lift</div>
           <div className="text-2xl font-mono font-bold text-success-teal">+445.34%</div>
           <div className="text-[11px] font-mono text-text-secondary">Statistically Significant (p = 0.02)</div>
         </GlassCard>
 
         <GlassCard padding="md" className="space-y-1">
-          <div className="text-[10px] font-mono uppercase text-text-tertiary">Recovered Volume</div>
+          <div className="text-xs font-medium text-text-tertiary">Recovered Volume</div>
           <div className="text-2xl font-mono font-bold text-text-primary">₹16.63 Lakh</div>
           <div className="text-[11px] font-mono text-text-secondary">vs. ₹2.00 Lakh (Control)</div>
         </GlassCard>
 
         <GlassCard padding="md" className="space-y-1">
-          <div className="text-[10px] font-mono uppercase text-text-tertiary">Penalties Avoided</div>
+          <div className="text-xs font-medium text-text-tertiary">Penalties Avoided</div>
           <div className="text-2xl font-mono font-bold text-brand-blue">₹88,200</div>
           <div className="text-[11px] font-mono text-text-secondary">ISO 8583 Cat 1 Stopping Rules</div>
         </GlassCard>
 
         <GlassCard padding="md" className="space-y-1">
-          <div className="text-[10px] font-mono uppercase text-text-tertiary">Compliance Breaches</div>
+          <div className="text-xs font-medium text-text-tertiary">Statutory Breaches</div>
           <div className="text-2xl font-mono font-bold text-success-teal">0 Violations</div>
           <div className="text-[11px] font-mono text-text-secondary">vs. 15 Incurred by Control</div>
         </GlassCard>
@@ -90,7 +90,7 @@ export default function ImpactReportPage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
             <thead>
-              <tr className="border-b border-border-subtle text-[11px] uppercase text-text-tertiary bg-canvas-raised">
+              <tr className="border-b border-border-subtle text-xs font-medium text-text-tertiary bg-canvas-raised">
                 <th className="py-3 px-4">Evaluation Dimension</th>
                 <th className="py-3 px-4">Control (Naive Gateway Retries)</th>
                 <th className="py-3 px-4 text-brand-emphasis">Treatment (Razorpay Recovery Agent)</th>
@@ -147,37 +147,37 @@ export default function ImpactReportPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">One-Off Payments (450 Cases)</div>
+            <div className="text-text-tertiary text-xs font-medium">One-Off Payments (450 Cases)</div>
             <div className="text-base font-bold text-text-primary">46.7% Recovered</div>
             <div className="text-[11px] text-text-secondary">210 / 450 card/UPI declines resolved</div>
           </div>
 
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">Subscriptions (375 Cases)</div>
+            <div className="text-text-tertiary text-xs font-medium">Subscriptions (375 Cases)</div>
             <div className="text-base font-bold text-text-primary">45.9% Recovered</div>
             <div className="text-[11px] text-text-secondary">Halted subscriptions churn prevented</div>
           </div>
 
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">E-Mandates (300 Cases)</div>
+            <div className="text-text-tertiary text-xs font-medium">E-Mandates (300 Cases)</div>
             <div className="text-base font-bold text-text-primary">46.7% Recovered</div>
             <div className="text-[11px] text-text-secondary">Pre-debit AFA flows completed</div>
           </div>
 
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">Checkout Drop-Off (225 Cases)</div>
+            <div className="text-text-tertiary text-xs font-medium">Checkout Drop-Off (225 Cases)</div>
             <div className="text-base font-bold text-text-primary">20.0% Recovered</div>
             <div className="text-[11px] text-text-secondary">High-intent abandoned cart lift</div>
           </div>
 
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">B2B Receivables (150 Invoices)</div>
+            <div className="text-text-tertiary text-xs font-medium">B2B Receivables (150 Invoices)</div>
             <div className="text-base font-bold text-positive-emphasis">71.3% Recovered</div>
             <div className="text-[11px] text-text-secondary">107 corporate invoices settled before Day 45</div>
           </div>
 
           <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
-            <div className="text-text-tertiary uppercase text-[10px]">Voicebot Telephony (420 Calls)</div>
+            <div className="text-text-tertiary text-xs font-medium">Voicebot Telephony (420 Calls)</div>
             <div className="text-base font-bold text-brand-emphasis">48% Pickup / 20% Conv.</div>
             <div className="text-[11px] text-text-secondary">Connected conversion rate</div>
           </div>

@@ -1087,5 +1087,38 @@
     "status": "PENDING",
     "created_at": "2026-09-05T10:39:09.751400+05:30",
     "notes": "Test PTP"
+  },
+  {
+    "ptp_id": "ptp_v-1_100",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T11:04:21.475263+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_v-1_101",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T11:04:21.477760+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_c-test-p_102",
+    "case_id": "c-test-ptp-99",
+    "customer_name": "Vikram Sen",
+    "phone": "+919111222333",
+    "amount_paise": 350000,
+    "promised_date": "2026-09-10",
+    "status": "PENDING",
+    "created_at": "2026-09-05T11:04:23.104650+05:30",
+    "notes": "Test PTP"
   }
 ]

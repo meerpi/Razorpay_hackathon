@@ -91,7 +91,9 @@ export const CaseDetailSheet: React.FC<CaseDetailSheetProps> = ({
             </div>
             <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
               <div className="text-[10px] text-text-tertiary">Method</div>
-              <div className="font-semibold text-brand-default uppercase">{transactionCase.method}</div>
+              <div className="font-semibold text-brand-default capitalize">
+                {transactionCase.method === 'upi' ? 'UPI' : transactionCase.method}
+              </div>
             </div>
           </div>
 

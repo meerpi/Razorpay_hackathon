@@ -146,7 +146,7 @@ export default function OverviewPage() {
         {/* Stat 4: Regulatory Violations */}
         <Link href="/compliance" className="block">
           <GlassCard variant="interactive" padding="sm" className="h-full">
-            <div className="text-[11px] text-text-secondary">Statutory Violations</div>
+            <div className="text-[11px] text-text-secondary">Statutory Breaches</div>
             <div className="text-lg font-bold font-mono text-text-primary mt-1 tabular-nums">
               0 <span className="text-xs font-normal text-text-tertiary">/ {violationsAvoided}</span>
             </div>

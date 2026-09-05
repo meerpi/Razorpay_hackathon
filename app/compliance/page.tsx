@@ -66,7 +66,7 @@ export default function CompliancePage() {
         </div>
 
         <div className="text-[11px] font-mono text-text-tertiary">
-          Breaches Detected: <span className="text-positive-emphasis font-bold">0</span> (100% Compliant)
+          Statutory Breaches: <span className="text-positive-emphasis font-bold">0</span> (100% Compliant)
         </div>
       </div>
 
@@ -83,11 +83,11 @@ export default function CompliancePage() {
             <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">
                 <Lock className="w-4 h-4 text-brand-default" />
-                <span className="text-xs font-mono uppercase tracking-wider text-text-primary font-semibold">
-                  TRAI TCCCPR 1601 Series Header Enforcement
+                <span className="text-xs font-semibold text-text-primary">
+                  TRAI TCCCPR 1601 series header enforcement
                 </span>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-positive-subtle text-positive-emphasis border border-positive-muted font-semibold uppercase">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-positive-subtle text-positive-emphasis border border-positive-muted font-semibold">
                 Enforced
               </span>
             </div>
@@ -118,7 +118,7 @@ export default function CompliancePage() {
           {/* DNC Suppression Quick List */}
           <div className="p-4 rounded-md surface-panel space-y-2">
             <div className="flex items-center justify-between">
-              <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary flex items-center gap-1.5">
+              <div className="text-xs font-medium text-text-tertiary flex items-center gap-1.5">
                 <UserX className="w-3.5 h-3.5 text-attention-default" />
                 <span>Do-Not-Call (DNC) &amp; Opt-Out Registry (Zero Outreach Guarantee)</span>
               </div>
@@ -158,7 +158,7 @@ export default function CompliancePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
             <thead>
-              <tr className="border-b border-border-subtle text-[10px] uppercase tracking-wider text-text-tertiary">
+              <tr className="border-b border-border-subtle text-xs font-medium text-text-tertiary">
                 <th className="py-2 px-3">Case ID</th>
                 <th className="py-2 px-3">Customer</th>
                 <th className="py-2 px-3 text-right">Amount</th>
@@ -244,7 +244,7 @@ export default function CompliancePage() {
                   {/* Countdown Timer Badge */}
                   <div
                     className={clsx(
-                      'font-mono text-xs px-2.5 py-1 rounded-xs font-bold uppercase tracking-wider',
+                      'font-mono text-xs px-2.5 py-1 rounded-xs font-semibold',
                       daysLeft <= 3
                         ? 'bg-negative-subtle text-negative-emphasis border border-negative-muted'
                         : daysLeft <= 15
@@ -252,7 +252,7 @@ export default function CompliancePage() {
                         : 'bg-positive-subtle text-positive-emphasis border border-positive-muted'
                     )}
                   >
-                    {daysLeft <= 3 ? `CRITICAL: ${daysLeft} DAYS LEFT` : `${daysLeft} Days to Disallowance`}
+                    {daysLeft <= 3 ? `Critical: ${daysLeft} days left` : `${daysLeft} days to disallowance`}
                   </div>
                 </div>
 

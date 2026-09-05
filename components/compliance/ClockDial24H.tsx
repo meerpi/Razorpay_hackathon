@@ -63,7 +63,7 @@ export const ClockDial24H: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center justify-center p-5 rounded-md surface-panel relative select-none">
-      <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary mb-2 flex items-center gap-1.5">
+      <div className="text-xs font-medium text-text-tertiary mb-2 flex items-center gap-1.5">
         <Clock className="w-3.5 h-3.5 text-brand-default" />
         <span>24-Hour Statutory Dial (IST)</span>
       </div>
@@ -146,10 +146,10 @@ export const ClockDial24H: React.FC = () => {
           <span className="text-xl font-mono font-bold text-text-primary tabular-nums">
             {String(hours).padStart(2, '0')}:{String(minutes).padStart(2, '0')}
           </span>
-          <span className="text-[10px] font-mono text-text-tertiary uppercase">IST</span>
+          <span className="text-[10px] font-mono text-text-tertiary">IST</span>
           <span
             className={clsx(
-              'mt-1 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold',
+              'mt-1 text-[9px] font-mono px-1.5 py-0.5 rounded-xs font-semibold',
               isRbiActive
                 ? 'bg-positive-subtle text-positive-emphasis border border-positive-muted'
                 : 'bg-canvas-raised text-text-tertiary border border-border-subtle'
