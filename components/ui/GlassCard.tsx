@@ -4,14 +4,14 @@ import { clsx } from 'clsx';
 interface GlassCardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   className?: string;
-  variant?: 'default' | 'amber' | 'blue' | 'interactive';
+  variant?: 'surface' | 'default' | 'amber' | 'blue' | 'interactive' | 'glass';
   padding?: 'none' | 'sm' | 'md' | 'lg';
 }
 
 export const GlassCard: React.FC<GlassCardProps> = ({
   children,
   className,
-  variant = 'default',
+  variant = 'surface',
   padding = 'md',
   ...props
 }) => {
@@ -23,10 +23,12 @@ export const GlassCard: React.FC<GlassCardProps> = ({
   }[padding];
 
   const variantClasses = {
-    default: 'glass-panel rounded-lg',
-    interactive: 'glass-panel-interactive rounded-lg cursor-pointer',
-    amber: 'glass-panel-amber rounded-lg',
-    blue: 'glass-panel rounded-lg shadow-blue-glow border-brand-blue/30',
+    surface: 'surface-panel rounded-md',
+    default: 'surface-panel rounded-md',
+    interactive: 'surface-panel-interactive rounded-md cursor-pointer',
+    blue: 'surface-panel rounded-md border-brand-muted',
+    amber: 'glass-panel-amber rounded-md',
+    glass: 'glass-panel rounded-md',
   }[variant];
 
   return (
@@ -34,7 +36,7 @@ export const GlassCard: React.FC<GlassCardProps> = ({
       className={clsx(
         variantClasses,
         paddingClasses,
-        'relative overflow-hidden text-text-primary transition-all duration-200',
+        'relative overflow-hidden text-text-primary transition-all duration-140',
         className
       )}
       {...props}

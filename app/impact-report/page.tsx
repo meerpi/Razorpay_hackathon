@@ -82,57 +82,57 @@ export default function ImpactReportPage() {
       </div>
 
       {/* Detailed Side-by-Side Comparison Table */}
-      <div className="p-5 rounded-xl glass-panel space-y-4">
-        <div className="text-sm font-semibold text-text-primary border-b border-glass-border pb-3">
+      <div className="p-5 rounded-md surface-panel space-y-4">
+        <div className="text-sm font-semibold text-text-primary border-b border-border-subtle pb-3">
           Policy Outcome Comparison: Control (Naive Merchant) vs. Treatment (Autonomous AI Agent)
         </div>
 
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
             <thead>
-              <tr className="border-b border-glass-border text-[11px] uppercase text-text-tertiary bg-canvas-raised">
+              <tr className="border-b border-border-subtle text-[11px] uppercase text-text-tertiary bg-canvas-raised">
                 <th className="py-3 px-4">Evaluation Dimension</th>
                 <th className="py-3 px-4">Control (Naive Gateway Retries)</th>
-                <th className="py-3 px-4 text-brand-blue">Treatment (Razorpay Recovery Agent)</th>
+                <th className="py-3 px-4 text-brand-emphasis">Treatment (Razorpay Recovery Agent)</th>
                 <th className="py-3 px-4 text-right">Net Advantage</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-glass-border">
+            <tbody className="divide-y divide-border-subtle">
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Gross Revenue Recovered</td>
                 <td className="py-3 px-4 text-text-secondary">₹2,00,000.00</td>
-                <td className="py-3 px-4 text-success-teal font-bold">₹16,63,387.90</td>
-                <td className="py-3 px-4 text-right text-success-teal font-bold">+₹14.63 Lakh (+731%)</td>
+                <td className="py-3 px-4 text-positive-emphasis font-bold">₹16,63,387.90</td>
+                <td className="py-3 px-4 text-right text-positive-emphasis font-bold">+₹14.63 Lakh (+731%)</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Card Scheme Penalty Fees</td>
-                <td className="py-3 px-4 text-danger-crimson">₹88,200.00 (Blind Cat 1 Retries)</td>
-                <td className="py-3 px-4 text-success-teal font-bold">₹0.00 (Zero Retries on Dead Cards)</td>
-                <td className="py-3 px-4 text-right text-success-teal">100% Fees Saved</td>
+                <td className="py-3 px-4 text-negative-emphasis">₹88,200.00 (Blind Cat 1 Retries)</td>
+                <td className="py-3 px-4 text-positive-emphasis font-bold">₹0.00 (Zero Retries on Dead Cards)</td>
+                <td className="py-3 px-4 text-right text-positive-emphasis">100% Fees Saved</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Regulatory Violations</td>
-                <td className="py-3 px-4 text-danger-crimson">15 Breaches (Nocturnal &amp; No RPV)</td>
-                <td className="py-3 px-4 text-success-teal font-bold">0 Breaches (100% Compliant)</td>
-                <td className="py-3 px-4 text-right text-success-teal">Zero Legal Exposure</td>
+                <td className="py-3 px-4 text-negative-emphasis">15 Breaches (Nocturnal &amp; No RPV)</td>
+                <td className="py-3 px-4 text-positive-emphasis font-bold">0 Breaches (100% Compliant)</td>
+                <td className="py-3 px-4 text-right text-positive-emphasis">Zero Legal Exposure</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Degraded Switch Handling</td>
                 <td className="py-3 px-4 text-text-secondary">Repeated retries on broken switch</td>
-                <td className="py-3 px-4 text-brand-blue font-bold">Auto-rerouted to UPI Intent</td>
-                <td className="py-3 px-4 text-right text-brand-blue">+62% Recovery Lift</td>
+                <td className="py-3 px-4 text-brand-emphasis font-bold">Auto-rerouted to UPI Intent</td>
+                <td className="py-3 px-4 text-right text-brand-emphasis">+62% Recovery Lift</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Communication Cost / Case</td>
                 <td className="py-3 px-4 text-text-secondary">₹4.50 (Unchecked SMS blasts)</td>
                 <td className="py-3 px-4 text-text-primary font-bold">₹1.20 (Suppressed &amp; Smart Channels)</td>
-                <td className="py-3 px-4 text-right text-success-teal">-73.3% Overhead</td>
+                <td className="py-3 px-4 text-right text-positive-emphasis">-73.3% Overhead</td>
               </tr>
               <tr>
                 <td className="py-3 px-4 font-semibold text-text-primary">Audit Integrity</td>
                 <td className="py-3 px-4 text-text-secondary">Plain text mutable database logs</td>
-                <td className="py-3 px-4 text-brand-blue font-bold">Append-only SHA-256 Hash Chain</td>
-                <td className="py-3 px-4 text-right text-brand-blue">Tamper-evident to byte</td>
+                <td className="py-3 px-4 text-brand-emphasis font-bold">Append-only SHA-256 Hash Chain</td>
+                <td className="py-3 px-4 text-right text-brand-emphasis">Tamper-evident to byte</td>
               </tr>
             </tbody>
           </table>
@@ -140,45 +140,45 @@ export default function ImpactReportPage() {
       </div>
 
       {/* Breakdown by Case Type */}
-      <div className="p-5 rounded-xl glass-panel space-y-4">
-        <div className="text-sm font-semibold text-text-primary border-b border-glass-border pb-3">
+      <div className="p-5 rounded-md surface-panel space-y-4">
+        <div className="text-sm font-semibold text-text-primary border-b border-border-subtle pb-3">
           Cohort Recovery Breakdown by Case Type ($N = 1,500$)
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 font-mono text-xs">
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">One-Off Payments (450 Cases)</div>
             <div className="text-base font-bold text-text-primary">46.7% Recovered</div>
             <div className="text-[11px] text-text-secondary">210 / 450 card/UPI declines resolved</div>
           </div>
 
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">Subscriptions (375 Cases)</div>
             <div className="text-base font-bold text-text-primary">45.9% Recovered</div>
             <div className="text-[11px] text-text-secondary">Halted subscriptions churn prevented</div>
           </div>
 
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">E-Mandates (300 Cases)</div>
             <div className="text-base font-bold text-text-primary">46.7% Recovered</div>
             <div className="text-[11px] text-text-secondary">Pre-debit AFA flows completed</div>
           </div>
 
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">Checkout Drop-Off (225 Cases)</div>
             <div className="text-base font-bold text-text-primary">20.0% Recovered</div>
             <div className="text-[11px] text-text-secondary">High-intent abandoned cart lift</div>
           </div>
 
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">B2B Receivables (150 Invoices)</div>
-            <div className="text-base font-bold text-success-teal">71.3% Recovered</div>
+            <div className="text-base font-bold text-positive-emphasis">71.3% Recovered</div>
             <div className="text-[11px] text-text-secondary">107 corporate invoices settled before Day 45</div>
           </div>
 
-          <div className="p-3 rounded-lg bg-canvas border border-glass-border space-y-1">
+          <div className="p-3 rounded-xs bg-canvas border border-border-subtle space-y-1">
             <div className="text-text-tertiary uppercase text-[10px]">Voicebot Telephony (420 Calls)</div>
-            <div className="text-base font-bold text-brand-blue">48% Pickup / 20% Conv.</div>
+            <div className="text-base font-bold text-brand-emphasis">48% Pickup / 20% Conv.</div>
             <div className="text-[11px] text-text-secondary">Connected conversion rate</div>
           </div>
         </div>

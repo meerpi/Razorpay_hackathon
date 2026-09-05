@@ -53,28 +53,28 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
   } = transactionCase;
 
   return (
-    <div className="relative pl-6 space-y-7 before:absolute before:left-2 before:top-3 before:bottom-3 before:w-[1px] before:bg-glass-border">
+    <div className="relative pl-6 space-y-6 before:absolute before:left-2 before:top-3 before:bottom-3 before:w-[1px] before:bg-border-subtle">
       {/* ── STAGE 1: INTERCEPTED ────────────────────────────────────────── */}
       <div className="relative group">
-        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-blue" />
+        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-default" />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue font-semibold">
+          <span className="text-xs font-mono text-brand-default font-semibold">
             1. Intercepted
           </span>
           <span className="text-[11px] font-mono text-text-tertiary">{timeFormatted}</span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-1.5">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-1.5">
           <div className="flex items-center justify-between">
             <span className="text-text-secondary font-medium">Gateway Error Event:</span>
-            <span className="font-mono text-text-primary px-1.5 py-0.5 rounded bg-canvas font-medium">
+            <span className="font-mono text-text-primary px-1.5 py-0.5 rounded-xs bg-canvas font-medium">
               {errorCode}
             </span>
           </div>
           <div className="flex items-center justify-between">
             <span className="text-text-secondary font-medium">Decline Code:</span>
-            <span className="font-mono text-danger-crimson font-semibold">{errorReason}</span>
+            <span className="font-mono text-negative-default font-semibold">{errorReason}</span>
           </div>
-          <p className="text-text-tertiary text-[11px] pt-1 border-t border-glass-border">
+          <p className="text-text-tertiary text-[11px] pt-1 border-t border-border-subtle">
             &quot;{errorDescription}&quot;
           </p>
         </div>
@@ -82,24 +82,24 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
       {/* ── STAGE 2: CLASSIFIED & ROOT-CAUSE LAYER ───────────────────────── */}
       <div className="relative group">
-        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-blue" />
+        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-default" />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue font-semibold">
+          <span className="text-xs font-mono text-brand-default font-semibold">
             2. Classified &amp; Root Cause
           </span>
-          <span className="text-[11px] font-mono text-success-teal">
+          <span className="text-[11px] font-mono text-positive-default">
             Confidence: {(agentConfidence * 100).toFixed(1)}%
           </span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-2">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-text-secondary font-medium">ISO 8583 Categorization:</span>
             <span
               className={clsx(
-                'font-mono px-2 py-0.5 rounded text-[11px] font-semibold uppercase',
+                'font-mono px-2 py-0.5 rounded-xs text-[11px] font-semibold',
                 isoCategory === 1
-                  ? 'bg-danger-crimson/15 text-danger-crimson border border-danger-crimson/30'
-                  : 'bg-brand-blue/15 text-brand-blue border border-brand-blue/30'
+                  ? 'bg-negative-subtle text-negative-default border border-negative-muted'
+                  : 'bg-brand-subtle text-brand-default border border-brand-muted'
               )}
             >
               ISO Code {isoCode} · Category {isoCategory} (
@@ -107,9 +107,9 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
             </span>
           </div>
 
-          <div className="text-[11px] text-text-secondary leading-relaxed bg-canvas/60 p-2 rounded border border-glass-border">
+          <div className="text-[11px] text-text-secondary leading-relaxed bg-canvas/60 p-2 rounded-xs border border-border-subtle">
             {declineClass === 'hard' ? (
-              <span className="text-danger-crimson font-mono">
+              <span className="text-negative-default font-mono">
                 Category 1 Hard Decline enforced: Zero automated card retries permitted. Avoided Visa/Mastercard
                 excess authorization penalty (~₹42.00).
               </span>
@@ -128,40 +128,40 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
           className={clsx(
             'absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2',
             complianceChecks.emandateAfa.passed && complianceChecks.msmed43Bh.passed
-              ? 'border-success-teal'
-              : 'border-human-amber'
+              ? 'border-positive-default'
+              : 'border-attention-default'
           )}
         />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-text-primary font-semibold flex items-center gap-1.5">
-            <ShieldCheck className="w-3.5 h-3.5 text-success-teal" />
+          <span className="text-xs font-mono text-text-primary font-semibold flex items-center gap-1.5">
+            <ShieldCheck className="w-3.5 h-3.5 text-positive-default" />
             <span>3. Statutory Compliance Gates</span>
           </span>
-          <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-canvas text-text-tertiary">
+          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-xs bg-canvas text-text-tertiary">
             5 Invariants Checked
           </span>
         </div>
 
-        <div className="mt-1 p-3 rounded-lg glass-panel space-y-2 text-xs">
+        <div className="mt-1 p-3 rounded-md surface-panel space-y-2 text-xs">
           {/* Gate 1: RBI Calling Window */}
-          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-glass-border">
+          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-border-subtle">
             <div>
               <div className="font-mono text-[11px] text-text-primary font-medium flex items-center gap-1">
-                <span className="text-success-teal">✓</span> RBI Calling Window (08:00–19:00 IST)
+                <span className="text-positive-default">✓</span> RBI Calling Window (08:00–19:00 IST)
               </div>
               <div className="text-[10px] text-text-tertiary">{complianceChecks.rbiCallingWindow.detail}</div>
             </div>
-            <span className="text-[10px] font-mono text-success-teal">PASS</span>
+            <span className="text-[10px] font-mono text-positive-default">PASS</span>
           </div>
 
           {/* Gate 2: e-Mandate AFA Threshold */}
-          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-glass-border">
+          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-border-subtle">
             <div>
               <div className="font-mono text-[11px] font-medium flex items-center gap-1">
                 {complianceChecks.emandateAfa.passed ? (
-                  <span className="text-success-teal">✓</span>
+                  <span className="text-positive-default">✓</span>
                 ) : (
-                  <span className="text-human-amber">⚠</span>
+                  <span className="text-attention-default">⚠</span>
                 )}
                 <span>e-Mandate AFA Ceiling (₹15,000)</span>
               </div>
@@ -170,7 +170,7 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
             <span
               className={clsx(
                 'text-[10px] font-mono font-semibold',
-                complianceChecks.emandateAfa.passed ? 'text-success-teal' : 'text-human-amber'
+                complianceChecks.emandateAfa.passed ? 'text-positive-default' : 'text-attention-default'
               )}
             >
               {complianceChecks.emandateAfa.passed ? 'PASS' : 'INTERCEPT'}
@@ -179,13 +179,13 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
           {/* Gate 3: Section 43B(h) MSMED Act */}
           {transactionCase.caseType === 'b2b_receivable' && (
-            <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-glass-border">
+            <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-border-subtle">
               <div>
                 <div className="font-mono text-[11px] font-medium flex items-center gap-1">
                   {complianceChecks.msmed43Bh.passed ? (
-                    <span className="text-success-teal">✓</span>
+                    <span className="text-positive-default">✓</span>
                   ) : (
-                    <span className="text-human-amber">⚠</span>
+                    <span className="text-attention-default">⚠</span>
                   )}
                   <span>MSMED Act §43B(h) 45-Day Dunning Clock</span>
                 </div>
@@ -194,7 +194,7 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
               <span
                 className={clsx(
                   'text-[10px] font-mono font-semibold',
-                  complianceChecks.msmed43Bh.passed ? 'text-success-teal' : 'text-human-amber'
+                  complianceChecks.msmed43Bh.passed ? 'text-positive-default' : 'text-attention-default'
                 )}
               >
                 {complianceChecks.msmed43Bh.daysRemaining !== undefined
@@ -205,25 +205,25 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
           )}
 
           {/* Gate 4: TRAI 1601 Header */}
-          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-glass-border">
+          <div className="flex items-start justify-between gap-2 pb-1.5 border-b border-border-subtle">
             <div>
               <div className="font-mono text-[11px] text-text-primary font-medium flex items-center gap-1">
-                <span className="text-success-teal">✓</span> TRAI 1601 Series DLT Header
+                <span className="text-positive-default">✓</span> TRAI 1601 Series DLT Header
               </div>
               <div className="text-[10px] text-text-tertiary">Verified transactional financial header series.</div>
             </div>
-            <span className="text-[10px] font-mono text-success-teal">PASS</span>
+            <span className="text-[10px] font-mono text-positive-default">PASS</span>
           </div>
 
           {/* Gate 5: Nocturnal CBS Blackout */}
           <div className="flex items-start justify-between gap-2">
             <div>
               <div className="font-mono text-[11px] text-text-primary font-medium flex items-center gap-1">
-                <span className="text-success-teal">✓</span> CBS Blackout Avoidance (23:30–03:30 IST)
+                <span className="text-positive-default">✓</span> CBS Blackout Avoidance (23:30–03:30 IST)
               </div>
               <div className="text-[10px] text-text-tertiary">Safe daytime operational window.</div>
             </div>
-            <span className="text-[10px] font-mono text-success-teal">PASS</span>
+            <span className="text-[10px] font-mono text-positive-default">PASS</span>
           </div>
         </div>
       </div>
@@ -235,13 +235,13 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
       {/* Operator Decision Stamp if already decided */}
       {operatorDecision && (
-        <div className="p-3 rounded-lg bg-canvas-raised border border-brand-blue/30 text-xs space-y-1">
-          <div className="flex items-center justify-between text-brand-blue font-mono text-[11px] font-semibold">
+        <div className="p-3 rounded-md surface-panel border border-brand-muted text-xs space-y-1">
+          <div className="flex items-center justify-between text-brand-default font-mono text-[11px] font-semibold">
             <span>OPERATOR RESOLUTION RECORDED</span>
             <span>{new Date(operatorDecision.decidedAt).toLocaleTimeString()}</span>
           </div>
           <div className="text-text-primary">
-            Action: <span className="font-mono uppercase font-semibold">{operatorDecision.action}</span>{' '}
+            Action: <span className="font-mono font-semibold capitalize">{operatorDecision.action}</span>{' '}
             {operatorDecision.overrideAction && `(${operatorDecision.overrideAction})`}
           </div>
           <div className="text-text-secondary text-[11px] italic">
@@ -252,39 +252,39 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
       {/* ── STAGE 4: BAYESIAN TIMING / LIQUIDITY ENGINE ─────────────────── */}
       <div className="relative group">
-        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-blue" />
+        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-default" />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue font-semibold">
+          <span className="text-xs font-mono text-brand-default font-semibold">
             4. Bayesian Timing &amp; Liquidity
           </span>
           <span className="text-[11px] font-mono text-text-tertiary">
             Delay: +{bayesianTiming.delayHours}h
           </span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-2">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-2">
           <div className="grid grid-cols-3 gap-2 font-mono text-center">
-            <div className="p-1.5 rounded bg-canvas border border-glass-border">
+            <div className="p-1.5 rounded-xs bg-canvas border border-border-subtle">
               <div className="text-[10px] text-text-tertiary">Customer Tenure</div>
               <div className="text-xs font-semibold text-text-primary">{bayesianTiming.tenureEvents} events</div>
             </div>
-            <div className="p-1.5 rounded bg-canvas border border-glass-border">
+            <div className="p-1.5 rounded-xs bg-canvas border border-border-subtle">
               <div className="text-[10px] text-text-tertiary">Shrinkage Weight (w)</div>
-              <div className="text-xs font-semibold text-brand-blue">{bayesianTiming.shrinkageWeight}</div>
+              <div className="text-xs font-semibold text-brand-default">{bayesianTiming.shrinkageWeight}</div>
             </div>
-            <div className="p-1.5 rounded bg-canvas border border-glass-border">
+            <div className="p-1.5 rounded-xs bg-canvas border border-border-subtle">
               <div className="text-[10px] text-text-tertiary">Target Payday</div>
-              <div className="text-xs font-semibold text-success-teal">Day {bayesianTiming.targetDay}</div>
+              <div className="text-xs font-semibold text-positive-default">Day {bayesianTiming.targetDay}</div>
             </div>
           </div>
 
           {/* Inline miniature timing curve */}
-          <div className="h-6 w-full flex items-end gap-1 px-1 pt-1 bg-canvas/40 rounded">
+          <div className="h-6 w-full flex items-end gap-1 px-1 pt-1 bg-canvas/40 rounded-xs">
             {[10, 25, 45, 90, 60, 30, 15, 10].map((val, idx) => (
               <div
                 key={idx}
                 className={clsx(
-                  'flex-1 rounded-t transition-all',
-                  idx === 3 ? 'bg-brand-blue h-full' : 'bg-glass-border hover:bg-text-tertiary'
+                  'flex-1 rounded-t-xs transition-colors',
+                  idx === 3 ? 'bg-brand-default h-full' : 'bg-border-default hover:bg-text-tertiary'
                 )}
                 style={{ height: `${val}%` }}
                 title={`Slot ${idx + 1}: ${val}% optimal liquidity probability`}
@@ -293,7 +293,7 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
           </div>
           <div className="flex justify-between text-[10px] font-mono text-text-tertiary">
             <span>Immediate (Fail)</span>
-            <span className="text-brand-blue font-semibold">Optimal Slot (Day {bayesianTiming.targetDay})</span>
+            <span className="text-brand-default font-semibold">Optimal Slot (Day {bayesianTiming.targetDay})</span>
             <span>Exhaustion</span>
           </div>
         </div>
@@ -301,22 +301,22 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
       {/* ── STAGE 5: SWITCH & RAIL SELECTION ────────────────────────────── */}
       <div className="relative group">
-        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-blue" />
+        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-default" />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue font-semibold">
+          <span className="text-xs font-mono text-brand-default font-semibold">
             5. Switch &amp; Rail Selection
           </span>
           <span className="text-[11px] font-mono text-text-secondary">{rail}</span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-1.5">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-1.5">
           <div className="flex items-center justify-between">
             <span className="text-text-secondary font-medium">Selected Routing Rail:</span>
-            <span className="font-mono text-brand-blue font-semibold px-2 py-0.5 rounded bg-brand-blue/15 border border-brand-blue/30">
+            <span className="font-mono text-brand-default font-semibold px-2 py-0.5 rounded-xs bg-brand-subtle border border-brand-muted">
               {rail}
             </span>
           </div>
           {wasRerouted && (
-            <div className="p-2 rounded bg-brand-blue/10 border border-brand-blue/30 text-[11px] text-brand-blue font-mono leading-tight">
+            <div className="p-2 rounded-xs bg-brand-subtle border border-brand-muted text-[11px] text-brand-default font-mono leading-tight">
               ⚠ Failover Applied: {rerouteReason}
             </div>
           )}
@@ -325,26 +325,26 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
 
       {/* ── STAGE 6: DISPATCH ───────────────────────────────────────────── */}
       <div className="relative group">
-        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-blue" />
+        <span className="absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2 border-brand-default" />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-brand-blue font-semibold">
+          <span className="text-xs font-mono text-brand-default font-semibold">
             6. Multi-Channel Dispatch
           </span>
-          <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-canvas text-text-tertiary">
-            {dispatch.channel.replace('_', ' ')}
+          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-xs bg-canvas text-text-tertiary capitalize">
+            {dispatch.channel.replace(/_/g, ' ')}
           </span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-2">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-2">
           {dispatch.paylinkUrl && (
-            <div className="flex items-center justify-between p-2 rounded bg-canvas border border-glass-border">
-              <span className="font-mono text-[11px] text-brand-blue truncate max-w-[280px]">
+            <div className="flex items-center justify-between p-2 rounded-xs bg-canvas border border-border-subtle">
+              <span className="font-mono text-[11px] text-brand-default truncate max-w-[280px]">
                 {dispatch.paylinkUrl}
               </span>
               <a
                 href={dispatch.paylinkUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="text-text-tertiary hover:text-brand-blue"
+                className="text-text-tertiary hover:text-brand-default"
               >
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
@@ -354,7 +354,7 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
           {dispatch.voiceFsmState && (
             <div className="flex items-center justify-between text-[11px] font-mono">
               <span className="text-text-secondary">Voicebot FSM State:</span>
-              <span className="text-human-amber font-semibold px-1.5 py-0.5 rounded bg-human-amber/15 border border-human-amber/30">
+              <span className="text-attention-default font-semibold px-1.5 py-0.5 rounded-xs bg-attention-subtle border border-attention-muted">
                 {dispatch.voiceFsmState}
               </span>
             </div>
@@ -367,24 +367,24 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
         <span
           className={clsx(
             'absolute -left-6 top-1.5 w-3 h-3 rounded-full bg-canvas border-2',
-            outcome.recoveredAmountPaise ? 'border-success-teal' : 'border-neutral-slate'
+            outcome.recoveredAmountPaise ? 'border-positive-default' : 'border-neutral-default'
           )}
         />
         <div className="flex items-center justify-between">
-          <span className="text-[11px] font-mono uppercase tracking-wider text-text-primary font-semibold">
+          <span className="text-xs font-mono text-text-primary font-semibold">
             7. Outcome &amp; Cryptographic Ledger
           </span>
           <span className="text-[11px] font-mono text-text-tertiary">Block #{transactionCase.auditBlockIndex}</span>
         </div>
-        <div className="mt-1 p-3 rounded-lg glass-panel text-xs space-y-2">
+        <div className="mt-1 p-3 rounded-md surface-panel text-xs space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-text-secondary font-medium">Status:</span>
             <span
               className={clsx(
-                'font-mono font-semibold px-2 py-0.5 rounded',
+                'font-mono font-semibold px-2 py-0.5 rounded-xs',
                 outcome.recoveredAmountPaise
-                  ? 'bg-success-teal/15 text-success-teal border border-success-teal/30'
-                  : 'bg-neutral-slate/15 text-text-secondary'
+                  ? 'bg-positive-subtle text-positive-default border border-positive-muted'
+                  : 'bg-neutral-subtle text-text-secondary border border-neutral-muted'
               )}
             >
               {outcome.recoveredAmountPaise
@@ -393,7 +393,7 @@ export const ReasoningTimeline: React.FC<ReasoningTimelineProps> = ({
             </span>
           </div>
 
-          <div className="pt-2 border-t border-glass-border font-mono text-[10px] text-text-tertiary truncate">
+          <div className="pt-2 border-t border-border-subtle font-mono text-[10px] text-text-tertiary truncate">
             SHA-256 Hash: <span className="text-text-secondary">{transactionCase.auditBlockHash}</span>
           </div>
         </div>

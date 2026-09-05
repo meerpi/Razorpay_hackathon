@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="bg-canvas text-text-primary min-h-screen antialiased selection:bg-brand-blue/30">
         <NavRail />
         <AmbientStatusStrip />
-        <main className="ml-64 pt-10 min-h-screen p-6 max-w-7xl">
+        <main className="ml-64 pt-10 min-h-screen p-6 max-w-[1680px]">
           {children}
         </main>
       </body>

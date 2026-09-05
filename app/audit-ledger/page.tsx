@@ -161,7 +161,7 @@ export default function AuditLedgerPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <h1 className="text-xl font-semibold tracking-tight text-text-primary flex items-center gap-2">
-            <Link2 className="w-5 h-5 text-brand-blue" />
+            <Link2 className="w-5 h-5 text-brand-default" />
             <span>Cryptographic Audit Ledger</span>
           </h1>
           <p className="text-xs font-mono text-text-tertiary mt-1">
@@ -177,7 +177,7 @@ export default function AuditLedgerPage() {
               if (autoCase) setSampleCaseId(autoCase.id);
               setIsSamplingModalOpen(true);
             }}
-            className="px-3 py-1.5 rounded-md text-xs font-mono font-medium bg-brand-blue/15 text-brand-blue border border-brand-blue/30 hover:bg-brand-blue/25 transition-all flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-md text-xs font-mono font-medium bg-brand-subtle text-brand-emphasis border border-brand-muted hover:bg-brand-muted/30 transition-all flex items-center gap-1.5"
           >
             <FileCheck className="w-3.5 h-3.5" />
             <span>Audit Governance Sample</span>
@@ -186,14 +186,14 @@ export default function AuditLedgerPage() {
           {isValid ? (
             <button
               onClick={handleTamperTest}
-              className="px-3 py-1.5 rounded-md text-xs font-mono font-medium text-danger-crimson border border-danger-crimson/30 hover:bg-danger-crimson/15 transition-all"
+              className="px-3 py-1.5 rounded-md text-xs font-mono font-medium text-negative-emphasis border border-negative-muted hover:bg-negative-subtle transition-all"
             >
               Simulate 1-Byte Tamper
             </button>
           ) : (
             <button
               onClick={handleRestore}
-              className="px-3 py-1.5 rounded-md text-xs font-mono font-medium text-success-teal border border-success-teal/40 bg-success-teal/15 hover:bg-success-teal/25 transition-all flex items-center gap-1.5"
+              className="px-3 py-1.5 rounded-md text-xs font-mono font-medium text-positive-emphasis border border-positive-muted bg-positive-subtle hover:bg-positive-muted transition-all flex items-center gap-1.5"
             >
               <RotateCcw className="w-3.5 h-3.5" />
               <span>Restore Chain Integrity</span>
@@ -205,17 +205,17 @@ export default function AuditLedgerPage() {
       {/* Verification Status Banner */}
       <div
         className={clsx(
-          'p-4 rounded-xl border flex items-start justify-between gap-3 font-mono text-xs transition-all',
+          'p-4 rounded-md border flex items-start justify-between gap-3 font-mono text-xs transition-all',
           isValid
-            ? 'glass-panel border-success-teal/30 bg-success-teal/5'
-            : 'bg-danger-crimson/15 border-danger-crimson/60 shadow-[0_0_20px_var(--danger-crimson-glow)] text-text-primary'
+            ? 'surface-panel border-positive-muted bg-positive-subtle/20'
+            : 'surface-panel border-negative-default bg-negative-subtle/30 text-text-primary'
         )}
       >
         <div className="flex items-center gap-3">
           {isValid ? (
-            <ShieldCheck className="w-5 h-5 text-success-teal shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-positive-emphasis shrink-0" />
           ) : (
-            <ShieldAlert className="w-5 h-5 text-danger-crimson animate-pulse shrink-0" />
+            <ShieldAlert className="w-5 h-5 text-negative-emphasis shrink-0" />
           )}
           <div>
             <div className="font-bold text-sm">
@@ -232,7 +232,7 @@ export default function AuditLedgerPage() {
         </div>
 
         <div className="text-right">
-          <span className="text-[10px] uppercase px-2 py-0.5 rounded font-semibold bg-canvas">
+          <span className="text-[10px] uppercase px-2 py-0.5 rounded-xs font-semibold bg-canvas border border-border-subtle">
             Total Blocks: {blocks.length}
           </span>
         </div>
@@ -247,7 +247,7 @@ export default function AuditLedgerPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search block by hash, case ID, rule fired..."
-            className="w-full pl-9 pr-3 py-1.5 bg-canvas-raised border border-glass-border rounded-md text-xs text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-brand-blue font-mono"
+            className="w-full pl-9 pr-3 py-1.5 bg-canvas-raised border border-border-subtle rounded-md text-xs text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-brand-default font-mono"
           />
         </div>
 
@@ -266,15 +266,15 @@ export default function AuditLedgerPage() {
               key={b.index}
               onClick={() => handleOpenCase(b.caseId)}
               className={clsx(
-                'p-4 rounded-xl border cursor-pointer transition-all',
+                'p-4 rounded-md border cursor-pointer transition-all',
                 isCorrupted
-                  ? 'bg-danger-crimson/15 border-danger-crimson/80 shadow-[0_0_16px_var(--danger-crimson-glow)]'
-                  : 'glass-panel hover:bg-glass-bg'
+                  ? 'surface-panel border-negative-default bg-negative-subtle/20'
+                  : 'surface-panel hover:bg-canvas'
               )}
             >
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-glass-border pb-2.5 font-mono text-xs">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle pb-2.5 font-mono text-xs">
                 <div className="flex items-center gap-2">
-                  <span className="px-2 py-0.5 rounded bg-canvas-raised font-bold text-brand-blue border border-glass-border">
+                  <span className="px-2 py-0.5 rounded-xs bg-canvas-raised font-bold text-brand-emphasis border border-border-subtle">
                     Block #{b.index}
                   </span>
                   <span className="text-text-primary font-semibold">{b.action}</span>
@@ -296,14 +296,14 @@ export default function AuditLedgerPage() {
               </div>
 
               {/* Hashes: Current and Previous */}
-              <div className="pt-2 border-t border-glass-border grid grid-cols-1 md:grid-cols-2 gap-2 text-[10px] font-mono">
+              <div className="pt-2 border-t border-border-subtle grid grid-cols-1 md:grid-cols-2 gap-2 text-[10px] font-mono">
                 <div className="truncate">
                   <span className="text-text-tertiary">Prev Hash (H_i-1): </span>
                   <span className="text-text-secondary">{b.prevHash}</span>
                 </div>
                 <div className="truncate text-right">
                   <span className="text-text-tertiary">Canonical Hash (H_i): </span>
-                  <span className={clsx(isCorrupted ? 'text-danger-crimson font-bold' : 'text-brand-blue font-medium')}>
+                  <span className={clsx(isCorrupted ? 'text-negative-emphasis font-bold' : 'text-brand-emphasis font-medium')}>
                     {b.canonicalHash}
                   </span>
                 </div>
@@ -316,10 +316,10 @@ export default function AuditLedgerPage() {
       {/* Governance Sampling Modal */}
       {isSamplingModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
-          <div className="w-full max-w-lg p-6 rounded-2xl bg-canvas-raised border border-glass-border shadow-2xl space-y-4">
-            <div className="flex items-center justify-between border-b border-glass-border pb-3">
+          <div className="w-full max-w-lg p-6 rounded-md bg-canvas-raised border border-border-subtle shadow-raised-high space-y-4">
+            <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">
-                <FileCheck className="w-5 h-5 text-brand-blue" />
+                <FileCheck className="w-5 h-5 text-brand-default" />
                 <span className="font-semibold text-sm text-text-primary">
                   RBI Governance Audit Sampling Sign-off
                 </span>
@@ -345,7 +345,7 @@ export default function AuditLedgerPage() {
                 <select
                   value={sampleCaseId}
                   onChange={(e) => setSampleCaseId(e.target.value)}
-                  className="w-full p-2 bg-canvas border border-glass-border rounded-md text-text-primary font-mono"
+                  className="w-full p-2 bg-canvas border border-border-subtle rounded-md text-text-primary font-mono"
                 >
                   {cases
                     .filter((c) => c.status === 'auto_resolved')
@@ -366,12 +366,12 @@ export default function AuditLedgerPage() {
                   onChange={(e) => setSamplingNote(e.target.value)}
                   placeholder="e.g. Sample verified against bank settlement webhook. Full compliance confirmed."
                   rows={3}
-                  className="w-full p-2 bg-canvas border border-glass-border rounded-md text-text-primary font-sans text-xs focus:outline-none focus:border-brand-blue resize-none"
+                  className="w-full p-2 bg-canvas border border-border-subtle rounded-md text-text-primary font-sans text-xs focus:outline-none focus:border-brand-default resize-none"
                 />
               </div>
             </div>
 
-            <div className="flex items-center justify-end gap-2 pt-2 border-t border-glass-border">
+            <div className="flex items-center justify-end gap-2 pt-2 border-t border-border-subtle">
               <button
                 onClick={() => setIsSamplingModalOpen(false)}
                 className="px-3 py-1.5 rounded-md text-xs font-mono text-text-tertiary hover:text-text-primary"
@@ -380,7 +380,7 @@ export default function AuditLedgerPage() {
               </button>
               <button
                 onClick={handleSignOffSample}
-                className="px-4 py-2 rounded-md text-xs font-mono font-semibold bg-brand-blue text-white shadow-blue-glow hover:bg-brand-blue/90"
+                className="px-4 py-2 rounded-md text-xs font-mono font-semibold bg-brand-default text-white hover:bg-brand-emphasis"
               >
                 Sign Off &amp; Append to Ledger
               </button>

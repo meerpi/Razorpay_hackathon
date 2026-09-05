@@ -34,12 +34,25 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [feedbackMessage, setFeedbackMessage] = useState<string | null>(null);
 
-  const handleApprove = () => {
+  const handleApprove = async () => {
     if (!operatorNote.trim()) {
       setFeedbackMessage('Please enter an operator rationale note before approving.');
       return;
     }
     setIsSubmitting(true);
+    try {
+      await fetch('/api/engine/cases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caseId: currentCase.id,
+          action: 'approve',
+          note: operatorNote,
+        }),
+      });
+    } catch (e) {
+      console.error('Failed to persist case approval:', e);
+    }
     dataStore.approveCase(currentCase.id, operatorNote);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -47,12 +60,26 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
     }, 400);
   };
 
-  const handleOverride = () => {
+  const handleOverride = async () => {
     if (!operatorNote.trim()) {
       setFeedbackMessage('Please enter an operator rationale note before applying override.');
       return;
     }
     setIsSubmitting(true);
+    try {
+      await fetch('/api/engine/cases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caseId: currentCase.id,
+          action: 'override',
+          overrideAction: selectedOverride,
+          note: operatorNote,
+        }),
+      });
+    } catch (e) {
+      console.error('Failed to persist case override:', e);
+    }
     dataStore.overrideCase(currentCase.id, selectedOverride, operatorNote);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -60,12 +87,25 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
     }, 400);
   };
 
-  const handleReject = () => {
+  const handleReject = async () => {
     if (!operatorNote.trim()) {
       setFeedbackMessage('Please enter an escalation note for the Grievance Redressal Officer.');
       return;
     }
     setIsSubmitting(true);
+    try {
+      await fetch('/api/engine/cases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          caseId: currentCase.id,
+          action: 'reject',
+          note: operatorNote,
+        }),
+      });
+    } catch (e) {
+      console.error('Failed to persist case rejection:', e);
+    }
     dataStore.rejectCase(currentCase.id, operatorNote);
     setTimeout(() => {
       setIsSubmitting(false);
@@ -82,15 +122,15 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
   ];
 
   return (
-    <div className="glass-panel-amber rounded-xl p-5 my-4 transition-all">
+    <div className="glass-panel-amber rounded-md p-5 my-4 transition-all">
       {/* Header Banner */}
-      <div className="flex items-start justify-between gap-3 pb-3 border-b border-human-amber/20">
+      <div className="flex items-start justify-between gap-3 pb-3 border-b border-attention-muted">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md bg-human-amber/20 flex items-center justify-center text-human-amber border border-human-amber/40">
+          <div className="w-7 h-7 rounded-xs bg-attention-subtle flex items-center justify-center text-attention-default border border-attention-muted">
             <AlertTriangle className="w-4 h-4 animate-pulse" />
           </div>
           <div>
-            <div className="text-xs font-mono uppercase tracking-wider text-human-amber font-semibold">
+            <div className="text-xs font-mono text-attention-default font-semibold">
               Human-in-the-Loop Intercept
             </div>
             <div className="text-[11px] text-text-tertiary">
@@ -101,7 +141,7 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
 
         {/* SLA Countdown Timer */}
         {currentCase.slaCountdownSeconds && (
-          <div className="flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded bg-canvas-raised/90 border border-human-amber/30 text-human-amber font-semibold tabular-nums">
+          <div className="flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded-xs bg-canvas-raised border border-attention-muted text-attention-default font-semibold tabular-nums">
             <Clock className="w-3.5 h-3.5" />
             <span>SLA: 23h 48m</span>
           </div>
@@ -112,17 +152,17 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-3 text-xs">
         {/* Escalation Reason */}
         <div className="col-span-full">
-          <div className="text-[11px] font-mono text-text-tertiary uppercase mb-1">
+          <div className="text-[11px] font-mono text-text-tertiary mb-1">
             Escalation Reason:
           </div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-human-amber/15 text-human-amber border border-human-amber/30 font-mono text-xs font-medium">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-xs bg-attention-subtle text-attention-default border border-attention-muted font-mono text-xs font-medium">
             {currentCase.escalationReason || 'Policy Sentinel Intercept'}
           </div>
         </div>
 
         {/* Financial Exposure */}
         <div>
-          <div className="text-[11px] font-mono text-text-tertiary uppercase mb-1">
+          <div className="text-[11px] font-mono text-text-tertiary mb-1">
             Financial Exposure:
           </div>
           <div className="text-sm font-mono font-semibold text-text-primary">
@@ -132,46 +172,46 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
 
         {/* Regulatory Citation */}
         <div>
-          <div className="text-[11px] font-mono text-text-tertiary uppercase mb-1">
+          <div className="text-[11px] font-mono text-text-tertiary mb-1">
             Regulatory Citation:
           </div>
           <div className="text-xs text-text-secondary font-mono flex items-center gap-1">
-            <ShieldCheck className="w-3.5 h-3.5 text-brand-blue" />
+            <ShieldCheck className="w-3.5 h-3.5 text-brand-default" />
             <span>{currentCase.regulatoryCitation || 'RBI Fair Practices Code §3.1'}</span>
           </div>
         </div>
 
         {/* Agent Confidence */}
         <div>
-          <div className="text-[11px] font-mono text-text-tertiary uppercase mb-1">
+          <div className="text-[11px] font-mono text-text-tertiary mb-1">
             Agent Confidence:
           </div>
           <div className="text-xs font-mono font-semibold text-text-secondary flex items-center gap-2">
-            <span className="text-success-teal">{(currentCase.agentConfidence * 100).toFixed(1)}%</span>
+            <span className="text-positive-default">{(currentCase.agentConfidence * 100).toFixed(1)}%</span>
             <span className="text-[10px] text-text-tertiary font-normal">(Threshold: 80.0%)</span>
           </div>
         </div>
 
         {/* Agent Suggested Action */}
         <div className="col-span-full">
-          <div className="text-[11px] font-mono text-text-tertiary uppercase mb-1 flex items-center gap-1.5">
-            <Sparkles className="w-3 h-3 text-brand-blue" />
+          <div className="text-[11px] font-mono text-text-tertiary mb-1 flex items-center gap-1.5">
+            <Sparkles className="w-3 h-3 text-brand-default" />
             <span>Agent Proposed Resolution:</span>
           </div>
-          <div className="p-2.5 rounded bg-canvas/60 border border-glass-border text-xs text-text-primary leading-relaxed font-sans">
+          <div className="p-2.5 rounded-xs bg-canvas/60 border border-border-subtle text-xs text-text-primary leading-relaxed font-sans">
             {currentCase.agentSuggestedAction || 'Dispatch compliant Smart PayLink with pre-debit AFA notification.'}
           </div>
         </div>
       </div>
 
       {/* Customer Message Preview with AI Disclosure tag */}
-      <div className="p-2.5 rounded bg-canvas/40 border border-glass-border/70 text-xs mb-3">
+      <div className="p-2.5 rounded-xs bg-canvas/40 border border-border-subtle text-xs mb-3">
         <div className="flex items-center justify-between mb-1.5">
           <div className="flex items-center gap-1.5 text-text-tertiary font-mono text-[11px]">
             <MessageSquare className="w-3 h-3" />
             <span>Customer Message Preview</span>
           </div>
-          <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-brand-navy border border-brand-blue/30 text-brand-blue uppercase tracking-wider">
+          <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-brand-navy border border-brand-muted text-brand-default">
             AI-generated — will be disclosed to customer
           </span>
         </div>
@@ -183,13 +223,13 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
       </div>
 
       {/* Tab Switcher for Action vs Manual Override */}
-      <div className="flex items-center gap-2 mb-3 border-b border-glass-border pb-2">
+      <div className="flex items-center gap-2 mb-3 border-b border-border-subtle pb-2">
         <button
           onClick={() => setActiveTab('decision')}
           className={clsx(
-            'px-3 py-1 rounded text-xs font-mono transition-colors',
+            'px-3 py-1 rounded-xs text-xs font-mono transition-colors cursor-pointer',
             activeTab === 'decision'
-              ? 'bg-human-amber/20 text-human-amber border border-human-amber/40 font-semibold'
+              ? 'bg-attention-subtle text-attention-default border border-attention-muted font-semibold'
               : 'text-text-secondary hover:text-text-primary'
           )}
         >
@@ -198,9 +238,9 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
         <button
           onClick={() => setActiveTab('override')}
           className={clsx(
-            'px-3 py-1 rounded text-xs font-mono transition-colors flex items-center gap-1.5',
+            'px-3 py-1 rounded-xs text-xs font-mono transition-colors flex items-center gap-1.5 cursor-pointer',
             activeTab === 'override'
-              ? 'bg-brand-blue/20 text-brand-blue border border-brand-blue/40 font-semibold'
+              ? 'bg-brand-subtle text-brand-default border border-brand-muted font-semibold'
               : 'text-text-secondary hover:text-text-primary'
           )}
         >
@@ -212,13 +252,13 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
       {/* Override Dropdown if Tab is active */}
       {activeTab === 'override' && (
         <div className="mb-3 space-y-1.5">
-          <label className="text-[11px] font-mono text-text-tertiary uppercase">
+          <label className="text-[11px] font-mono text-text-tertiary">
             Choose Alternative Remediation Rail:
           </label>
           <select
             value={selectedOverride}
             onChange={(e) => setSelectedOverride(e.target.value)}
-            className="w-full bg-canvas border border-glass-border rounded-md px-3 py-2 text-xs text-text-primary focus:outline-none focus:border-brand-blue font-mono"
+            className="w-full bg-canvas border border-border-subtle rounded-xs px-3 py-2 text-xs text-text-primary focus:outline-none focus:border-brand-default font-mono"
           >
             {overrideOptions.map((opt, idx) => (
               <option key={idx} value={opt} className="bg-canvas-raised text-text-primary">
@@ -232,8 +272,8 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
       {/* Operator Note Input (Required for Cryptographic Audit) */}
       <div className="space-y-1.5 mb-3">
         <div className="flex items-center justify-between text-[11px] font-mono">
-          <span className="text-text-tertiary uppercase">
-            Operator Note <span className="text-danger-crimson">*</span> (Recorded to SHA-256 Ledger):
+          <span className="text-text-tertiary">
+            Operator Note <span className="text-negative-default">*</span> (Recorded to SHA-256 Ledger):
           </span>
           <span className="text-text-tertiary">{operatorNote.length}/250</span>
         </div>
@@ -245,10 +285,10 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
           }}
           placeholder="Document operator justification and verification details..."
           rows={2}
-          className="w-full bg-canvas/80 border border-glass-border rounded-md p-2.5 text-xs text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-human-amber/60 font-sans resize-none"
+          className="w-full bg-canvas/80 border border-border-subtle rounded-xs p-2.5 text-xs text-text-primary placeholder:text-text-tertiary focus:outline-none focus:border-attention-default font-sans resize-none"
         />
         {feedbackMessage && (
-          <p className="text-[11px] text-danger-crimson font-mono flex items-center gap-1">
+          <p className="text-[11px] text-negative-default font-mono flex items-center gap-1">
             <XCircle className="w-3.5 h-3.5" />
             <span>{feedbackMessage}</span>
           </p>
@@ -260,7 +300,7 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
         <button
           onClick={handleReject}
           disabled={isSubmitting}
-          className="px-3.5 py-2 rounded-md text-xs font-mono font-medium text-danger-crimson hover:bg-danger-crimson/15 border border-danger-crimson/30 transition-all flex items-center gap-1.5"
+          className="px-3.5 py-1.5 rounded-xs text-xs font-mono font-medium text-negative-default hover:bg-negative-subtle border border-negative-muted transition-all flex items-center gap-1.5 cursor-pointer"
         >
           <XCircle className="w-3.5 h-3.5" />
           <span>Reject &amp; Escalate to GRO</span>
@@ -270,7 +310,7 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
           <button
             onClick={handleOverride}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-md text-xs font-mono font-medium bg-brand-blue text-white hover:bg-brand-blue/90 shadow-blue-glow transition-all flex items-center gap-1.5"
+            className="px-4 py-1.5 rounded-xs text-xs font-mono font-medium bg-brand-default text-white hover:bg-brand-emphasis border border-brand-emphasis transition-all flex items-center gap-1.5 cursor-pointer shadow-raised-low"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Apply Override &amp; Dispatch</span>
@@ -279,7 +319,7 @@ export const HumanDecisionCard: React.FC<HumanDecisionCardProps> = ({
           <button
             onClick={handleApprove}
             disabled={isSubmitting}
-            className="px-4 py-2 rounded-md text-xs font-mono font-semibold bg-human-amber text-canvas hover:bg-human-amber/90 shadow-[0_0_12px_var(--human-amber-glow)] transition-all flex items-center gap-1.5"
+            className="px-4 py-1.5 rounded-xs text-xs font-mono font-semibold bg-attention-default text-canvas hover:bg-attention-emphasis transition-all flex items-center gap-1.5 cursor-pointer shadow-raised-low"
           >
             <CheckCircle2 className="w-3.5 h-3.5" />
             <span>Approve &amp; Resume Autonomous Remediation</span>

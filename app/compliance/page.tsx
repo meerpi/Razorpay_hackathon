@@ -57,7 +57,7 @@ export default function CompliancePage() {
       <div className="flex items-start justify-between">
         <div>
           <h1 className="text-xl font-semibold tracking-tight text-text-primary flex items-center gap-2">
-            <ShieldCheck className="w-5 h-5 text-success-teal" />
+            <ShieldCheck className="w-5 h-5 text-positive-emphasis" />
             <span>Compliance &amp; Statutory Gating</span>
           </h1>
           <p className="text-xs font-mono text-text-tertiary mt-1">
@@ -66,7 +66,7 @@ export default function CompliancePage() {
         </div>
 
         <div className="text-[11px] font-mono text-text-tertiary">
-          Breaches Detected: <span className="text-success-teal font-bold">0</span> (100% Compliant)
+          Breaches Detected: <span className="text-positive-emphasis font-bold">0</span> (100% Compliant)
         </div>
       </div>
 
@@ -79,15 +79,15 @@ export default function CompliancePage() {
 
         {/* TRAI 1601 Header Sentinel & Legal Citations */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="p-5 rounded-xl glass-panel space-y-3">
-            <div className="flex items-center justify-between border-b border-glass-border pb-3">
+          <div className="p-5 rounded-md surface-panel space-y-3">
+            <div className="flex items-center justify-between border-b border-border-subtle pb-3">
               <div className="flex items-center gap-2">
-                <Lock className="w-4 h-4 text-brand-blue" />
+                <Lock className="w-4 h-4 text-brand-default" />
                 <span className="text-xs font-mono uppercase tracking-wider text-text-primary font-semibold">
                   TRAI TCCCPR 1601 Series Header Enforcement
                 </span>
               </div>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-success-teal/20 text-success-teal border border-success-teal/40 font-semibold uppercase">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded-xs bg-positive-subtle text-positive-emphasis border border-positive-muted font-semibold uppercase">
                 Enforced
               </span>
             </div>
@@ -100,31 +100,31 @@ export default function CompliancePage() {
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 font-mono text-[11px]">
-              <div className="p-2 rounded bg-canvas/60 border border-glass-border">
+              <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
                 <span className="text-text-tertiary block text-[10px]">Active Header</span>
-                <span className="text-brand-blue font-semibold">+91 1601 294 819</span>
+                <span className="text-brand-emphasis font-semibold">+91 1601 294 819</span>
               </div>
-              <div className="p-2 rounded bg-canvas/60 border border-glass-border">
+              <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
                 <span className="text-text-tertiary block text-[10px]">DLT Entity ID</span>
                 <span className="text-text-primary font-semibold">1101529840001</span>
               </div>
-              <div className="p-2 rounded bg-canvas/60 border border-glass-border">
+              <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
                 <span className="text-text-tertiary block text-[10px]">DNC Suppression</span>
-                <span className="text-human-amber font-semibold">{dncSuppressedList.length} Contacts Active</span>
+                <span className="text-attention-emphasis font-semibold">{dncSuppressedList.length} Contacts Active</span>
               </div>
             </div>
           </div>
 
           {/* DNC Suppression Quick List */}
-          <div className="p-4 rounded-xl glass-panel space-y-2">
+          <div className="p-4 rounded-md surface-panel space-y-2">
             <div className="flex items-center justify-between">
               <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary flex items-center gap-1.5">
-                <UserX className="w-3.5 h-3.5 text-human-amber" />
+                <UserX className="w-3.5 h-3.5 text-attention-default" />
                 <span>Do-Not-Call (DNC) &amp; Opt-Out Registry (Zero Outreach Guarantee)</span>
               </div>
             </div>
 
-            <div className="divide-y divide-glass-border font-mono text-xs">
+            <div className="divide-y divide-border-subtle font-mono text-xs">
               {dncSuppressedList.map((item, idx) => (
                 <div key={idx} className="py-2 flex items-center justify-between text-[11px]">
                   <span className="text-text-primary font-semibold">{item.phone}</span>
@@ -138,11 +138,11 @@ export default function CompliancePage() {
       </div>
 
       {/* Section 2: Flagged e-Mandates Above ₹15,000 AFA Limit */}
-      <div className="p-5 rounded-xl glass-panel space-y-3">
-        <div className="flex items-center justify-between border-b border-glass-border pb-3">
+      <div className="p-5 rounded-md surface-panel space-y-3">
+        <div className="flex items-center justify-between border-b border-border-subtle pb-3">
           <div>
             <div className="text-sm font-semibold text-text-primary flex items-center gap-2">
-              <AlertTriangle className="w-4 h-4 text-human-amber" />
+              <AlertTriangle className="w-4 h-4 text-attention-default" />
               <span>e-Mandate AFA Sentinel (Transactions &gt; ₹15,000 Ceiling)</span>
             </div>
             <div className="text-xs font-mono text-text-tertiary mt-0.5">
@@ -158,7 +158,7 @@ export default function CompliancePage() {
         <div className="overflow-x-auto">
           <table className="w-full text-left font-mono text-xs">
             <thead>
-              <tr className="border-b border-glass-border text-[10px] uppercase tracking-wider text-text-tertiary">
+              <tr className="border-b border-border-subtle text-[10px] uppercase tracking-wider text-text-tertiary">
                 <th className="py-2 px-3">Case ID</th>
                 <th className="py-2 px-3">Customer</th>
                 <th className="py-2 px-3 text-right">Amount</th>
@@ -167,27 +167,27 @@ export default function CompliancePage() {
                 <th className="py-2 px-3 text-right">Inspect</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-glass-border">
+            <tbody className="divide-y divide-border-subtle">
               {afaFlaggedCases.map((c) => (
                 <tr
                   key={c.id}
                   onClick={() => handleOpenCase(c)}
-                  className="hover:bg-glass-bg cursor-pointer transition-colors"
+                  className="hover:bg-canvas-raised cursor-pointer transition-colors"
                 >
-                  <td className="py-2.5 px-3 text-brand-blue font-semibold">{c.id.slice(0, 16)}...</td>
+                  <td className="py-2.5 px-3 text-brand-emphasis font-semibold">{c.id.slice(0, 16)}...</td>
                   <td className="py-2.5 px-3 text-text-primary font-sans">{c.customerName}</td>
                   <td className="py-2.5 px-3 text-right">
                     <MonospaceAmount amountRupees={c.amountRupees} size="sm" />
                   </td>
                   <td className="py-2.5 px-3">
-                    <span className="px-2 py-0.5 rounded text-[10px] bg-human-amber/15 text-human-amber border border-human-amber/30">
+                    <span className="px-2 py-0.5 rounded-xs text-[10px] bg-attention-subtle text-attention-emphasis border border-attention-muted">
                       ₹{c.amountRupees.toLocaleString('en-IN')} &gt; ₹15,000 Ceiling
                     </span>
                   </td>
                   <td className="py-2.5 px-3 text-text-secondary">
                     {c.dispatch.paylinkUrl ? 'Smart PayLink with AFA OTP' : 'Awaiting Operator Approval'}
                   </td>
-                  <td className="py-2.5 px-3 text-right text-brand-blue">
+                  <td className="py-2.5 px-3 text-right text-brand-default">
                     <ExternalLink className="w-3.5 h-3.5 inline" />
                   </td>
                 </tr>
@@ -198,11 +198,11 @@ export default function CompliancePage() {
       </div>
 
       {/* Section 3: B2B Section 43B(h) Countdown Board */}
-      <div className="p-5 rounded-xl glass-panel space-y-3">
-        <div className="flex items-center justify-between border-b border-glass-border pb-3">
+      <div className="p-5 rounded-md surface-panel space-y-3">
+        <div className="flex items-center justify-between border-b border-border-subtle pb-3">
           <div>
             <div className="text-sm font-semibold text-text-primary flex items-center gap-2">
-              <Clock className="w-4 h-4 text-brand-blue" />
+              <Clock className="w-4 h-4 text-brand-default" />
               <span>MSMED Act §43B(h) Statutory 45-Day Countdown Board</span>
             </div>
             <div className="text-xs font-mono text-text-tertiary mt-0.5">
@@ -225,10 +225,10 @@ export default function CompliancePage() {
                 key={b.id}
                 onClick={() => handleOpenCase(b)}
                 className={clsx(
-                  'p-4 rounded-lg border cursor-pointer transition-all',
+                  'p-4 rounded-md border cursor-pointer transition-all',
                   isNearDeadline
-                    ? 'bg-human-amber/10 border-human-amber/40 hover:bg-human-amber/15 shadow-[0_0_12px_var(--human-amber-glow)]'
-                    : 'bg-canvas-raised/60 border-glass-border hover:bg-glass-bg'
+                    ? 'bg-attention-subtle/30 border-attention-muted hover:bg-attention-subtle/50'
+                    : 'bg-canvas-raised border-border-subtle hover:bg-canvas'
                 )}
               >
                 <div className="flex items-start justify-between">
@@ -244,19 +244,19 @@ export default function CompliancePage() {
                   {/* Countdown Timer Badge */}
                   <div
                     className={clsx(
-                      'font-mono text-xs px-2.5 py-1 rounded font-bold uppercase tracking-wider',
+                      'font-mono text-xs px-2.5 py-1 rounded-xs font-bold uppercase tracking-wider',
                       daysLeft <= 3
-                        ? 'bg-danger-crimson/20 text-danger-crimson border border-danger-crimson/40 animate-pulse'
+                        ? 'bg-negative-subtle text-negative-emphasis border border-negative-muted'
                         : daysLeft <= 15
-                        ? 'bg-human-amber/20 text-human-amber border border-human-amber/40'
-                        : 'bg-success-teal/20 text-success-teal border border-success-teal/40'
+                        ? 'bg-attention-subtle text-attention-emphasis border border-attention-muted'
+                        : 'bg-positive-subtle text-positive-emphasis border border-positive-muted'
                     )}
                   >
                     {daysLeft <= 3 ? `CRITICAL: ${daysLeft} DAYS LEFT` : `${daysLeft} Days to Disallowance`}
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between pt-3 mt-3 border-t border-glass-border text-xs font-mono">
+                <div className="flex items-center justify-between pt-3 mt-3 border-t border-border-subtle text-xs font-mono">
                   <span className="text-text-secondary">Outstanding Amount:</span>
                   <MonospaceAmount amountRupees={b.amountRupees} size="md" />
                 </div>

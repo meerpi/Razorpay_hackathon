@@ -72,7 +72,7 @@ export const AmbientStatusStrip: React.FC = () => {
         className={clsx(
           'flex items-center gap-2 px-2.5 py-1 rounded-md font-mono text-[11px] transition-all group border',
           degradedSwitch
-            ? 'bg-human-amber/10 border-human-amber/40 text-human-amber hover:bg-human-amber/15 shadow-[0_0_8px_var(--human-amber-glow)]'
+            ? 'bg-attention-subtle border-attention-muted text-attention-emphasis hover:bg-attention-muted/30'
             : 'glass-panel border-glass-border text-text-secondary hover:text-text-primary hover:bg-glass-bg'
         )}
         title="Click to view bank switch telemetry and failover visualizer"

@@ -91,8 +91,6 @@ export const NavRail: React.FC = () => {
           href: '/switch-health',
           label: 'Switch & Rail Health',
           icon: Radio,
-          badge: hasDegradedSwitch ? 'FAILOVER' : undefined,
-          badgeColor: 'blue',
         },
         {
           href: '/active-channels',
@@ -119,9 +117,9 @@ export const NavRail: React.FC = () => {
     <aside className="w-64 fixed inset-y-0 left-0 z-30 bg-canvas-raised/80 backdrop-blur-glass border-r border-glass-border flex flex-col justify-between select-none">
       {/* Brand Header */}
       <div>
-        <div className="p-5 border-b border-glass-border">
+        <div className="p-5 border-b border-border-subtle">
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 rounded-md bg-brand-blue flex items-center justify-center font-bold text-white shadow-blue-glow group-hover:scale-105 transition-transform">
+            <div className="w-8 h-8 rounded-sm bg-brand-default flex items-center justify-center font-bold text-white shadow-raised-low group-hover:scale-105 transition-transform">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12.0001 2L2 19.5H7.5L12.0001 11.5L16.5 19.5H22L12.0001 2Z" />
               </svg>
@@ -129,7 +127,7 @@ export const NavRail: React.FC = () => {
             <div>
               <div className="font-semibold text-sm tracking-tight text-text-primary flex items-center gap-1.5">
                 Razorpay
-                <span className="text-[10px] uppercase font-mono px-1 py-0.5 rounded bg-brand-navy border border-brand-blue/30 text-brand-blue">
+                <span className="text-[10px] uppercase font-mono px-1 py-0.5 rounded-xs bg-brand-navy border border-brand-muted text-brand-default">
                   Recovery
                 </span>
               </div>
@@ -144,7 +142,7 @@ export const NavRail: React.FC = () => {
         <nav className="p-3 space-y-4">
           {navSections.map((section) => (
             <div key={section.title} className="space-y-1">
-              <div className="px-3 py-1 text-[10px] font-mono uppercase tracking-wider text-text-tertiary font-semibold">
+              <div className="px-3 py-1 text-[10px] font-mono text-text-tertiary font-semibold">
                 {section.title}
               </div>
 
@@ -157,17 +155,17 @@ export const NavRail: React.FC = () => {
                     key={item.href}
                     href={item.href}
                     className={clsx(
-                      'flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-all group',
+                      'flex items-center justify-between px-3 py-2 rounded-xs text-xs font-medium transition-all group',
                       isActive
-                        ? 'bg-brand-blue/15 text-brand-blue border border-brand-blue/30 shadow-[0_0_12px_var(--brand-blue-glow)]'
-                        : 'text-text-secondary hover:text-text-primary hover:bg-glass-bg border border-transparent'
+                        ? 'bg-brand-subtle text-brand-default border border-brand-muted font-semibold'
+                        : 'text-text-secondary hover:text-text-primary hover:bg-canvas-overlay border border-transparent'
                     )}
                   >
                     <div className="flex items-center gap-2.5">
                       <Icon
                         className={clsx(
                           'w-4 h-4 transition-colors',
-                          isActive ? 'text-brand-blue' : 'text-text-tertiary group-hover:text-text-primary'
+                          isActive ? 'text-brand-default' : 'text-text-tertiary group-hover:text-text-primary'
                         )}
                         strokeWidth={1.75}
                       />
@@ -177,13 +175,13 @@ export const NavRail: React.FC = () => {
                     {item.badge && (
                       <span
                         className={clsx(
-                          'text-[10px] font-mono px-1.5 py-0.5 rounded font-semibold',
+                          'text-[10px] font-mono px-1.5 py-0.5 rounded-xs font-semibold',
                           item.badgeColor === 'amber' &&
-                            'bg-human-amber/20 text-human-amber border border-human-amber/50 shadow-[0_0_8px_var(--human-amber-glow)] animate-pulse',
+                            'bg-attention-subtle text-attention-emphasis border border-attention-muted',
                           item.badgeColor === 'blue' &&
-                            'bg-brand-blue/20 text-brand-blue border border-brand-blue/40',
+                            'bg-brand-subtle text-brand-emphasis border border-brand-muted',
                           item.badgeColor === 'slate' &&
-                            'bg-neutral-slate/20 text-text-tertiary border border-neutral-slate/40'
+                            'bg-neutral-subtle text-text-tertiary border border-neutral-muted'
                         )}
                       >
                         {item.badge}
@@ -198,16 +196,16 @@ export const NavRail: React.FC = () => {
       </div>
 
       {/* Footer Controls & Collateral */}
-      <div className="p-3 border-t border-glass-border space-y-2">
+      <div className="p-3 border-t border-border-subtle space-y-2">
         {/* Real Testbed Connection Status */}
-        <div className="p-2.5 rounded-md glass-panel flex items-center justify-between text-[11px] font-mono">
+        <div className="p-2.5 rounded-xs surface-panel border border-border-subtle flex items-center justify-between text-[11px] font-mono">
           <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-success-teal" />
+            <span className="w-2 h-2 rounded-full bg-positive-default" />
             <span className="text-text-secondary truncate max-w-[130px]" title="rzp_test_TVCK6KI3mrkU07">
               rzp_test_TVCK...
             </span>
           </div>
-          <span className="text-[9px] uppercase px-1 py-0.5 rounded bg-success-teal/20 text-success-teal font-bold">
+          <span className="text-[9px] uppercase px-1 py-0.5 rounded-xs bg-positive-subtle text-positive-default font-bold">
             LIVE
           </span>
         </div>

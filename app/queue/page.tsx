@@ -101,7 +101,7 @@ function QueueContent() {
   return (
     <div className="space-y-4">
       {/* Header with Navigation Breadcrumb */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-glass-border pb-4">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-border-subtle pb-4">
         <div>
           <div className="flex items-center gap-2 text-xs font-mono text-text-tertiary mb-1">
             <Link href="/" className="hover:text-text-primary flex items-center gap-1">
@@ -114,7 +114,7 @@ function QueueContent() {
             Transaction Queue Blotter
           </h1>
           <p className="text-xs text-text-secondary mt-0.5">
-            Streaming real cases from <code className="font-mono text-brand-blue">output/cases.jsonl</code> · {totalCount.toLocaleString()} matching events
+            Autonomous decline triage and recovery dispatch · {totalCount.toLocaleString()} events
           </p>
         </div>
 
@@ -122,7 +122,7 @@ function QueueContent() {
           <button
             onClick={fetchCases}
             disabled={loading}
-            className="px-3 py-1.5 rounded-lg text-xs font-mono glass-panel border border-glass-border hover:bg-glass-bg-hover text-text-secondary hover:text-text-primary transition-all flex items-center gap-1.5"
+            className="px-3 py-1.5 rounded-md text-xs font-mono surface-panel border border-border-subtle hover:bg-canvas text-text-secondary hover:text-text-primary transition-all flex items-center gap-1.5"
             title="Refresh cases from disk"
           >
             <RefreshCw className={clsx('w-3.5 h-3.5', loading && 'animate-spin')} />
@@ -133,17 +133,17 @@ function QueueContent() {
 
       {/* Preset Filter Indicator Banner */}
       {hasActivePreset && (
-        <div className="p-3 rounded-lg border border-brand-blue/30 bg-brand-blue/5 flex items-center justify-between text-xs font-mono">
+        <div className="p-3 rounded-md border border-brand-muted bg-brand-subtle/20 flex items-center justify-between text-xs font-mono">
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-brand-blue" />
+            <Filter className="w-4 h-4 text-brand-default" />
             <span className="text-text-secondary">Filtered by Category:</span>
             {caseTypeFilter !== 'all' && (
-              <span className="px-2 py-0.5 rounded bg-brand-blue/20 text-brand-blue font-semibold uppercase text-[10px]">
+              <span className="px-2 py-0.5 rounded-xs bg-brand-subtle text-brand-emphasis font-semibold uppercase text-[10px]">
                 Type: {caseTypeFilter}
               </span>
             )}
             {declineClassFilter !== 'all' && (
-              <span className="px-2 py-0.5 rounded bg-danger-crimson/20 text-danger-crimson font-semibold uppercase text-[10px]">
+              <span className="px-2 py-0.5 rounded-xs bg-negative-subtle text-negative-emphasis font-semibold uppercase text-[10px]">
                 Class: {declineClassFilter}
               </span>
             )}
@@ -178,8 +178,8 @@ function QueueContent() {
 
       {/* Dense Transaction Blotter Table */}
       {loading && cases.length === 0 ? (
-        <div className="p-12 text-center text-text-tertiary font-mono text-xs glass-panel rounded-xl border border-glass-border">
-          <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-brand-blue" />
+        <div className="p-12 text-center text-text-tertiary font-mono text-xs surface-panel rounded-md border border-border-subtle">
+          <RefreshCw className="w-5 h-5 animate-spin mx-auto mb-2 text-brand-default" />
           Loading cases from engine log...
         </div>
       ) : (
@@ -191,7 +191,7 @@ function QueueContent() {
       )}
 
       {/* Pagination Bar */}
-      <div className="flex items-center justify-between text-xs font-mono text-text-tertiary pt-2 border-t border-glass-border">
+      <div className="flex items-center justify-between text-xs font-mono text-text-tertiary pt-2 border-t border-border-subtle">
         <span>
           Showing {cases.length > 0 ? (page - 1) * limit + 1 : 0} to{' '}
           {Math.min(page * limit, totalCount)} of {totalCount.toLocaleString()} cases
@@ -201,7 +201,7 @@ function QueueContent() {
           <button
             onClick={() => setPage((p) => Math.max(1, p - 1))}
             disabled={page <= 1 || loading}
-            className="px-3 py-1 rounded border border-glass-border glass-panel hover:bg-glass-bg text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-3 py-1 rounded-xs border border-border-subtle surface-panel hover:bg-canvas text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Previous
           </button>
@@ -211,7 +211,7 @@ function QueueContent() {
           <button
             onClick={() => setPage((p) => p + 1)}
             disabled={page * limit >= totalCount || loading}
-            className="px-3 py-1 rounded border border-glass-border glass-panel hover:bg-glass-bg text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
+            className="px-3 py-1 rounded-xs border border-border-subtle surface-panel hover:bg-canvas text-text-primary disabled:opacity-40 disabled:cursor-not-allowed"
           >
             Next
           </button>

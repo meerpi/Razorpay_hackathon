@@ -43,7 +43,7 @@ export const CaseDetailSheet: React.FC<CaseDetailSheetProps> = ({
       {/* Slide-over Glass Sheet (24px radius, 680px width) */}
       <div className="relative w-full max-w-2xl bg-canvas-raised/95 backdrop-blur-glass border-l border-glass-border shadow-2xl h-full flex flex-col z-10 animate-in slide-in-from-right duration-200">
         {/* Header Strip */}
-        <div className="p-6 border-b border-glass-border flex items-start justify-between">
+        <div className="p-6 border-b border-border-subtle flex items-start justify-between">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="font-mono text-xs text-text-tertiary">{transactionCase.id}</span>
@@ -67,7 +67,7 @@ export const CaseDetailSheet: React.FC<CaseDetailSheetProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-text-tertiary hover:text-text-primary hover:bg-glass-bg transition-colors"
+            className="p-1.5 rounded-xs text-text-tertiary hover:text-text-primary hover:bg-canvas-overlay transition-colors cursor-pointer"
           >
             <X className="w-5 h-5" />
           </button>
@@ -77,21 +77,21 @@ export const CaseDetailSheet: React.FC<CaseDetailSheetProps> = ({
         <div className="flex-1 overflow-y-auto p-6 space-y-6">
           {/* Metadata Micro-Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs font-mono">
-            <div className="p-2.5 rounded bg-canvas/60 border border-glass-border">
-              <div className="text-[10px] text-text-tertiary uppercase">Payment Ref</div>
+            <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
+              <div className="text-[10px] text-text-tertiary">Payment Ref</div>
               <div className="font-semibold text-text-primary truncate">{transactionCase.paymentId}</div>
             </div>
-            <div className="p-2.5 rounded bg-canvas/60 border border-glass-border">
-              <div className="text-[10px] text-text-tertiary uppercase">Order Ref</div>
+            <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
+              <div className="text-[10px] text-text-tertiary">Order Ref</div>
               <div className="font-semibold text-text-primary truncate">{transactionCase.orderId}</div>
             </div>
-            <div className="p-2.5 rounded bg-canvas/60 border border-glass-border">
-              <div className="text-[10px] text-text-tertiary uppercase">Case Type</div>
-              <div className="font-semibold text-text-primary capitalize">{transactionCase.caseType.replace('_', ' ')}</div>
+            <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
+              <div className="text-[10px] text-text-tertiary">Case Type</div>
+              <div className="font-semibold text-text-primary capitalize">{transactionCase.caseType.replace(/_/g, ' ')}</div>
             </div>
-            <div className="p-2.5 rounded bg-canvas/60 border border-glass-border">
-              <div className="text-[10px] text-text-tertiary uppercase">Method</div>
-              <div className="font-semibold text-brand-blue uppercase">{transactionCase.method}</div>
+            <div className="p-2 rounded-xs bg-canvas/60 border border-border-subtle">
+              <div className="text-[10px] text-text-tertiary">Method</div>
+              <div className="font-semibold text-brand-default uppercase">{transactionCase.method}</div>
             </div>
           </div>
 
@@ -103,12 +103,12 @@ export const CaseDetailSheet: React.FC<CaseDetailSheetProps> = ({
         </div>
 
         {/* Footer Audit Signature Bar */}
-        <div className="p-4 border-t border-glass-border bg-canvas/60 flex items-center justify-between text-[11px] font-mono text-text-tertiary">
+        <div className="p-4 border-t border-border-subtle bg-canvas/60 flex items-center justify-between text-[11px] font-mono text-text-tertiary">
           <span>SHA-256 Block #{transactionCase.auditBlockIndex}</span>
           <span className="truncate max-w-[320px] text-text-secondary">
             {transactionCase.auditBlockHash}
           </span>
-          <span className="text-success-teal flex items-center gap-1">
+          <span className="text-positive-default flex items-center gap-1">
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>Immutable</span>
           </span>

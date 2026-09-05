@@ -17,9 +17,9 @@
     "phone": "+919876543210",
     "amount_paise": 300000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-03T12:08:02.952384+05:30",
-    "notes": "Agreed to complete payment via dispatched link."
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_v-1_3",
@@ -28,9 +28,9 @@
     "phone": "+919876543210",
     "amount_paise": 300000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-03T12:08:02.953949+05:30",
-    "notes": "Agreed to complete payment via dispatched link."
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_c-test-p_4",
@@ -534,9 +534,9 @@
     "phone": "+919988776655",
     "amount_paise": 750000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-04T11:02:48.624543+05:30",
-    "notes": "Promised to pay via phone"
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_v-demo-0_50",
@@ -666,9 +666,9 @@
     "phone": "+919876543210",
     "amount_paise": 250000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-04T11:44:44.991542+05:30",
-    "notes": "Promised to pay via phone"
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_v-demo-0_62",
@@ -688,9 +688,9 @@
     "phone": "+919876543210",
     "amount_paise": 250000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-04T11:46:18.769794+05:30",
-    "notes": "Promised to pay via phone"
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_ptp_test_64",
@@ -699,9 +699,9 @@
     "phone": "+919876543210",
     "amount_paise": 450000,
     "promised_date": "2026-09-04",
-    "status": "PENDING",
+    "status": "BROKEN",
     "created_at": "2026-09-04T11:52:35.246472+05:30",
-    "notes": "Promised to pay via phone"
+    "notes": "Commitment expired on 2026-09-04 without payment. Escalation triggered."
   },
   {
     "ptp_id": "ptp_v-demo-0_65",
@@ -1020,6 +1020,72 @@
     "promised_date": "2026-09-10",
     "status": "PENDING",
     "created_at": "2026-09-04T14:00:08.001749+05:30",
+    "notes": "Test PTP"
+  },
+  {
+    "ptp_id": "ptp_v-1_94",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:38:10.987998+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_v-1_95",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:38:10.990605+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_c-test-p_96",
+    "case_id": "c-test-ptp-99",
+    "customer_name": "Vikram Sen",
+    "phone": "+919111222333",
+    "amount_paise": 350000,
+    "promised_date": "2026-09-10",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:38:18.377477+05:30",
+    "notes": "Test PTP"
+  },
+  {
+    "ptp_id": "ptp_v-1_97",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:39:06.115677+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_v-1_98",
+    "case_id": "v-1",
+    "customer_name": "Aarav Patel",
+    "phone": "+919876543210",
+    "amount_paise": 300000,
+    "promised_date": "2026-09-06",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:39:06.118997+05:30",
+    "notes": "Agreed to complete payment via dispatched link."
+  },
+  {
+    "ptp_id": "ptp_c-test-p_99",
+    "case_id": "c-test-ptp-99",
+    "customer_name": "Vikram Sen",
+    "phone": "+919111222333",
+    "amount_paise": 350000,
+    "promised_date": "2026-09-10",
+    "status": "PENDING",
+    "created_at": "2026-09-05T10:39:09.751400+05:30",
     "notes": "Test PTP"
   }
 ]

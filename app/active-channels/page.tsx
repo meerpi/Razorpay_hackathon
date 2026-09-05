@@ -62,13 +62,13 @@ export default function ActiveChannelsPage() {
         </div>
 
         {/* Tab Controls */}
-        <div className="flex items-center gap-1.5 p-1 rounded-lg glass-panel font-mono text-xs select-none">
+        <div className="flex items-center gap-1.5 p-1 rounded-md surface-panel font-mono text-xs select-none">
           <button
             onClick={() => setActiveTab('voice')}
             className={clsx(
-              'px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-xs transition-all flex items-center gap-1.5',
               activeTab === 'voice'
-                ? 'bg-brand-blue text-white font-semibold shadow-blue-glow'
+                ? 'bg-brand-default text-white font-semibold shadow-raised-low'
                 : 'text-text-secondary hover:text-text-primary'
             )}
           >
@@ -78,9 +78,9 @@ export default function ActiveChannelsPage() {
           <button
             onClick={() => setActiveTab('links')}
             className={clsx(
-              'px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-xs transition-all flex items-center gap-1.5',
               activeTab === 'links'
-                ? 'bg-brand-blue text-white font-semibold shadow-blue-glow'
+                ? 'bg-brand-default text-white font-semibold shadow-raised-low'
                 : 'text-text-secondary hover:text-text-primary'
             )}
           >
@@ -90,9 +90,9 @@ export default function ActiveChannelsPage() {
           <button
             onClick={() => setActiveTab('ptp')}
             className={clsx(
-              'px-3 py-1.5 rounded-md transition-all flex items-center gap-1.5',
+              'px-3 py-1.5 rounded-xs transition-all flex items-center gap-1.5',
               activeTab === 'ptp'
-                ? 'bg-brand-blue text-white font-semibold shadow-blue-glow'
+                ? 'bg-brand-default text-white font-semibold shadow-raised-low'
                 : 'text-text-secondary hover:text-text-primary'
             )}
           >
@@ -118,23 +118,23 @@ export default function ActiveChannelsPage() {
                   key={call.callId}
                   onClick={() => handleOpenCase(call.caseId)}
                   className={clsx(
-                    'p-4 rounded-xl border cursor-pointer transition-all',
+                    'p-4 rounded-md border cursor-pointer transition-all',
                     isHumanEscalation
-                      ? 'bg-human-amber/10 border-human-amber/40 shadow-[0_0_12px_var(--human-amber-glow)]'
-                      : 'glass-panel hover:bg-glass-bg'
+                      ? 'bg-attention-subtle/30 border-attention-muted'
+                      : 'surface-panel hover:bg-canvas'
                   )}
                 >
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-glass-border pb-3">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-border-subtle pb-3">
                     <div className="flex items-center gap-2.5">
                       <div
                         className={clsx(
-                          'w-7 h-7 rounded-md flex items-center justify-center',
+                          'w-7 h-7 rounded-xs flex items-center justify-center',
                           isHumanEscalation
-                            ? 'bg-human-amber/20 text-human-amber'
-                            : 'bg-brand-blue/20 text-brand-blue'
+                            ? 'bg-attention-subtle text-attention-emphasis'
+                            : 'bg-brand-subtle text-brand-emphasis'
                         )}
                       >
-                        <PhoneCall className="w-4 h-4 animate-pulse" />
+                        <PhoneCall className="w-4 h-4" />
                       </div>
                       <div>
                         <div className="font-semibold text-text-primary text-xs">
@@ -150,10 +150,10 @@ export default function ActiveChannelsPage() {
                       <MonospaceAmount amountRupees={call.amountRupees} size="md" />
                       <span
                         className={clsx(
-                          'px-2.5 py-1 rounded text-xs font-mono font-semibold uppercase',
+                          'px-2.5 py-1 rounded-xs text-xs font-mono font-semibold uppercase',
                           isHumanEscalation
-                            ? 'bg-human-amber text-canvas border border-human-amber shadow-[0_0_10px_var(--human-amber-glow)]'
-                            : 'bg-brand-blue/20 text-brand-blue border border-brand-blue/30'
+                            ? 'bg-attention-subtle text-attention-emphasis border border-attention-muted'
+                            : 'bg-brand-subtle text-brand-emphasis border border-brand-muted'
                         )}
                       >
                         {call.state}
@@ -184,10 +184,10 @@ export default function ActiveChannelsPage() {
             Pending Dynamic PayLinks (Pre-filled 1-Click Razorpay Checkout)
           </div>
 
-          <div className="overflow-hidden rounded-xl border border-glass-border glass-panel">
+          <div className="overflow-hidden rounded-md border border-border-subtle surface-panel">
             <table className="w-full text-left font-mono text-xs">
               <thead>
-                <tr className="border-b border-glass-border text-[10px] uppercase text-text-tertiary bg-canvas-raised">
+                <tr className="border-b border-border-subtle text-[10px] uppercase text-text-tertiary bg-canvas-raised">
                   <th className="py-3 px-4">Customer</th>
                   <th className="py-3 px-4">Short URL</th>
                   <th className="py-3 px-4 text-right">Amount</th>
@@ -196,17 +196,17 @@ export default function ActiveChannelsPage() {
                   <th className="py-3 px-4 text-right">Status</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-glass-border">
+              <tbody className="divide-y divide-border-subtle">
                 {payLinks.map((link) => (
                   <tr
                     key={link.linkId}
                     onClick={() => handleOpenCase(link.caseId)}
-                    className="hover:bg-glass-bg cursor-pointer transition-colors"
+                    className="hover:bg-canvas cursor-pointer transition-colors"
                   >
                     <td className="py-3 px-4 font-sans font-medium text-text-primary">
                       {link.customerName}
                     </td>
-                    <td className="py-3 px-4 text-brand-blue font-semibold">
+                    <td className="py-3 px-4 text-brand-emphasis font-semibold">
                       <div className="flex items-center gap-1">
                         <span>{link.shortUrl}</span>
                         <ExternalLink className="w-3 h-3 text-text-tertiary" />
@@ -218,7 +218,7 @@ export default function ActiveChannelsPage() {
                     <td className="py-3 px-4 text-text-secondary">{link.channel}</td>
                     <td className="py-3 px-4 text-text-tertiary">{link.expiresInMinutes} mins</td>
                     <td className="py-3 px-4 text-right">
-                      <span className="px-2 py-0.5 rounded text-[10px] uppercase font-semibold bg-brand-blue/15 text-brand-blue border border-brand-blue/30">
+                      <span className="px-2 py-0.5 rounded-xs text-[10px] uppercase font-semibold bg-brand-subtle text-brand-emphasis border border-brand-muted">
                         {link.status}
                       </span>
                     </td>
@@ -246,9 +246,9 @@ export default function ActiveChannelsPage() {
                 <div
                   key={p.ptpId}
                   onClick={() => handleOpenCase(p.caseId)}
-                  className="p-4 rounded-xl glass-panel hover:bg-glass-bg border border-glass-border cursor-pointer transition-all"
+                  className="p-4 rounded-md surface-panel hover:bg-canvas border border-border-subtle cursor-pointer transition-all"
                 >
-                  <div className="flex items-start justify-between gap-3 border-b border-glass-border pb-3">
+                  <div className="flex items-start justify-between gap-3 border-b border-border-subtle pb-3">
                     <div>
                       <div className="font-semibold text-text-primary text-xs font-sans">
                         {p.customerName} · {p.customerPhone}

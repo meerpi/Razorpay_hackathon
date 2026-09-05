@@ -62,9 +62,9 @@ export const ClockDial24H: React.FC = () => {
   const needleTip = polarToCartesian(cx, cy, radius - 15, currentAngleDeg);
 
   return (
-    <div className="flex flex-col items-center justify-center p-5 rounded-xl glass-panel relative select-none">
+    <div className="flex flex-col items-center justify-center p-5 rounded-md surface-panel relative select-none">
       <div className="text-xs font-mono uppercase tracking-wider text-text-tertiary mb-2 flex items-center gap-1.5">
-        <Clock className="w-3.5 h-3.5 text-brand-blue" />
+        <Clock className="w-3.5 h-3.5 text-brand-default" />
         <span>24-Hour Statutory Dial (IST)</span>
       </div>
 
@@ -76,7 +76,7 @@ export const ClockDial24H: React.FC = () => {
             cy={cy}
             r={radius}
             fill="none"
-            stroke="rgba(255, 255, 255, 0.08)"
+            stroke="var(--border-subtle)"
             strokeWidth="10"
           />
 
@@ -84,7 +84,7 @@ export const ClockDial24H: React.FC = () => {
           <path
             d={rbiPath}
             fill="none"
-            stroke="var(--success-teal)"
+            stroke="var(--positive-default)"
             strokeWidth="10"
             strokeLinecap="round"
             className="opacity-80"
@@ -94,7 +94,7 @@ export const ClockDial24H: React.FC = () => {
           <path
             d={cbsPath}
             fill="none"
-            stroke="var(--danger-crimson)"
+            stroke="var(--negative-default)"
             strokeWidth="10"
             strokeLinecap="round"
             className="opacity-70"
@@ -112,7 +112,7 @@ export const ClockDial24H: React.FC = () => {
 
             return (
               <g key={idx}>
-                <circle cx={ptOuter.x} cy={ptOuter.y} r="1.5" fill="rgba(255,255,255,0.3)" />
+                <circle cx={ptOuter.x} cy={ptOuter.y} r="1.5" fill="var(--text-tertiary)" opacity="0.4" />
                 <text
                   x={ptText.x}
                   y={ptText.y + 3}
@@ -133,12 +133,12 @@ export const ClockDial24H: React.FC = () => {
             y1={cy}
             x2={needleTip.x}
             y2={needleTip.y}
-            stroke="var(--brand-blue)"
+            stroke="var(--brand-default)"
             strokeWidth="2.5"
             strokeLinecap="round"
           />
-          <circle cx={cx} cy={cy} r="5" fill="var(--brand-blue)" />
-          <circle cx={needleTip.x} cy={needleTip.y} r="4" fill="var(--brand-blue)" className="animate-ping" />
+          <circle cx={cx} cy={cy} r="5" fill="var(--brand-default)" />
+          <circle cx={needleTip.x} cy={needleTip.y} r="3" fill="var(--brand-default)" />
         </svg>
 
         {/* Center Readout */}
@@ -149,10 +149,10 @@ export const ClockDial24H: React.FC = () => {
           <span className="text-[10px] font-mono text-text-tertiary uppercase">IST</span>
           <span
             className={clsx(
-              'mt-1 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded font-semibold',
+              'mt-1 text-[9px] font-mono uppercase px-1.5 py-0.5 rounded-xs font-semibold',
               isRbiActive
-                ? 'bg-success-teal/20 text-success-teal border border-success-teal/40'
-                : 'bg-neutral-slate/20 text-text-tertiary'
+                ? 'bg-positive-subtle text-positive-emphasis border border-positive-muted'
+                : 'bg-canvas-raised text-text-tertiary border border-border-subtle'
             )}
           >
             {isRbiActive ? 'RBI Outreach Open' : 'Outreach Paused'}
@@ -163,11 +163,11 @@ export const ClockDial24H: React.FC = () => {
       {/* Legend below dial */}
       <div className="flex items-center gap-4 mt-3 text-[11px] font-mono text-text-secondary">
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-success-teal" />
+          <span className="w-2.5 h-2.5 rounded-full bg-positive-default" />
           <span>RBI Window (08:00–19:00)</span>
         </div>
         <div className="flex items-center gap-1.5">
-          <span className="w-2.5 h-2.5 rounded-full bg-danger-crimson" />
+          <span className="w-2.5 h-2.5 rounded-full bg-negative-default" />
           <span>CBS Blackout (23:30–03:30)</span>
         </div>
       </div>

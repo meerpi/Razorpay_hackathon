@@ -23,28 +23,28 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   pulse = false,
   className,
 }) => {
-  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-xs' : 'px-2.5 py-1 text-xs';
+  const sizeClasses = size === 'sm' ? 'px-2 py-0.5 text-[11px]' : 'px-2.5 py-0.5 text-xs';
 
   if (status) {
     const config = {
       needs_review: {
-        bg: 'bg-human-amber/15 text-human-amber border-human-amber/40 shadow-[0_0_12px_var(--human-amber-glow)]',
-        dot: 'bg-human-amber animate-ping',
+        bg: 'bg-attention-subtle text-attention-default border-attention-muted shadow-amber-glow',
+        dot: 'bg-attention-default animate-ping',
         text: 'Needs review',
       },
       in_progress: {
-        bg: 'bg-brand-blue/15 text-brand-blue border-brand-blue/35 shadow-[0_0_10px_var(--brand-blue-glow)]',
-        dot: 'bg-brand-blue animate-pulse',
+        bg: 'bg-brand-subtle text-brand-default border-brand-muted',
+        dot: 'bg-brand-default animate-pulse',
         text: 'In progress',
       },
       auto_resolved: {
-        bg: 'bg-success-teal/15 text-success-teal border-success-teal/30',
-        dot: 'bg-success-teal',
+        bg: 'bg-positive-subtle text-positive-default border-positive-muted',
+        dot: 'bg-positive-default',
         text: 'Auto-resolved',
       },
       closed: {
-        bg: 'bg-neutral-slate/15 text-text-tertiary border-neutral-slate/30',
-        dot: 'bg-neutral-slate',
+        bg: 'bg-neutral-subtle text-text-tertiary border-neutral-muted',
+        dot: 'bg-neutral-default',
         text: 'Closed',
       },
     }[status];
@@ -52,13 +52,13 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     return (
       <span
         className={clsx(
-          'inline-flex items-center gap-1.5 rounded-sm font-medium border uppercase tracking-wider',
+          'inline-flex items-center gap-1.5 rounded-xs font-medium border text-[11px]',
           sizeClasses,
           config.bg,
           className
         )}
       >
-        <span className={clsx('w-1.5 h-1.5 rounded-full', config.dot)} />
+        <span className={clsx('w-1.5 h-1.5 rounded-full shrink-0', config.dot)} />
         {label || config.text}
       </span>
     );
@@ -67,15 +67,15 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   if (declineClass) {
     const config = {
       hard: {
-        bg: 'bg-danger-crimson/15 text-danger-crimson border-danger-crimson/30',
+        bg: 'bg-negative-subtle text-negative-default border-negative-muted',
         text: 'Hard Decline (Cat 1)',
       },
       soft: {
-        bg: 'bg-brand-blue/15 text-brand-blue border-brand-blue/30',
+        bg: 'bg-brand-subtle text-brand-default border-brand-muted',
         text: 'Soft Decline (Cat 2)',
       },
       technical: {
-        bg: 'bg-human-amber/15 text-human-amber border-human-amber/30',
+        bg: 'bg-attention-subtle text-attention-default border-attention-muted',
         text: 'Technical (Cat 2)',
       },
     }[declineClass];
@@ -83,7 +83,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     return (
       <span
         className={clsx(
-          'inline-flex items-center rounded-sm font-mono text-[11px] font-medium border uppercase tracking-wider px-2 py-0.5',
+          'inline-flex items-center rounded-xs font-mono text-[11px] font-medium border px-2 py-0.5',
           config.bg,
           className
         )}
@@ -97,8 +97,8 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
     return (
       <span
         className={clsx(
-          'inline-flex items-center rounded-sm font-mono text-[11px] font-semibold border px-2 py-0.5 tracking-tight',
-          'bg-canvas-raised/80 text-text-secondary border-glass-border',
+          'inline-flex items-center rounded-xs font-mono text-[11px] font-medium border px-2 py-0.5',
+          'bg-canvas-raised text-text-secondary border-border-subtle',
           className
         )}
       >
@@ -109,15 +109,15 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
 
   if (ptpStatus) {
     const config = {
-      PENDING: 'bg-brand-blue/15 text-brand-blue border-brand-blue/30',
-      KEPT: 'bg-success-teal/15 text-success-teal border-success-teal/30',
-      BROKEN: 'bg-danger-crimson/15 text-danger-crimson border-danger-crimson/30',
+      PENDING: 'bg-brand-subtle text-brand-default border-brand-muted',
+      KEPT: 'bg-positive-subtle text-positive-default border-positive-muted',
+      BROKEN: 'bg-negative-subtle text-negative-default border-negative-muted',
     }[ptpStatus];
 
     return (
       <span
         className={clsx(
-          'inline-flex items-center rounded-sm font-mono text-[11px] font-semibold border px-2 py-0.5 uppercase tracking-wider',
+          'inline-flex items-center rounded-xs font-mono text-[11px] font-semibold border px-2 py-0.5',
           config,
           className
         )}
@@ -130,7 +130,7 @@ export const StatusBadge: React.FC<StatusBadgeProps> = ({
   return (
     <span
       className={clsx(
-        'inline-flex items-center rounded-sm font-medium border bg-canvas-raised/80 text-text-secondary border-glass-border',
+        'inline-flex items-center rounded-xs font-medium border bg-canvas-raised text-text-secondary border-border-subtle',
         sizeClasses,
         className
       )}

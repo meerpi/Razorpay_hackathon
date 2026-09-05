@@ -13,11 +13,14 @@ import {
   Sparkles,
   PhoneCall,
   Link2,
+  ArrowLeft,
   ArrowRight,
   Terminal,
 } from 'lucide-react';
 import { GlassCard } from '@/components/ui/GlassCard';
 import { MonospaceAmount } from '@/components/ui/MonospaceAmount';
+import { StatusBadge } from '@/components/ui/StatusBadge';
+import { CaseStatus } from '@/lib/types';
 import { dataStore } from '@/lib/mock-data';
 import Link from 'next/link';
 
@@ -87,38 +90,31 @@ export default function TestLabPage() {
 
   return (
     <div className="space-y-6 max-w-5xl mx-auto pb-12">
-      {/* Header Banner */}
-      <div className="p-4 rounded-xl border border-brand-blue/50 bg-brand-blue/10 flex items-start justify-between gap-4">
-        <div className="flex items-start gap-3">
-          <div className="w-9 h-9 rounded-lg bg-brand-blue/20 text-brand-blue border border-brand-blue/40 flex items-center justify-center shrink-0 mt-0.5">
-            <FlaskConical className="w-5 h-5" />
-          </div>
-          <div>
-            <h1 className="text-base font-bold text-text-primary font-mono tracking-tight flex items-center gap-2">
-              <span>TEST LAB — ACTUAL PYTHON BACKEND &amp; RAZORPAY TESTBED EXECUTION</span>
-              <span className="px-2 py-0.5 rounded text-[10px] bg-brand-blue text-white uppercase font-bold tracking-wider">
-                100% Real API
-              </span>
-            </h1>
-            <p className="text-xs text-text-secondary mt-1 font-sans leading-relaxed">
-              Zero mock timers. Enter a phone number, amount, and decline code. This runner directly invokes{' '}
-              <code className="text-brand-blue font-mono bg-canvas-raised px-1 py-0.5 rounded border border-glass-border">
-                /home/meerpi/curr_project/Razorpay/.venv/bin/python3
-              </code>{' '}
-              and generates a <strong>genuine live Razorpay payment link</strong> on the testbed using your active API credentials.
-            </p>
-          </div>
+      {/* Header */}
+      <div className="border-b border-border-subtle pb-4">
+        <div className="flex items-center gap-2 text-xs font-mono text-text-tertiary mb-1">
+          <Link href="/" className="hover:text-text-primary flex items-center gap-1">
+            <ArrowLeft className="w-3 h-3" /> Overview Scoreboard
+          </Link>
+          <span>/</span>
+          <span className="text-text-primary">Simulator</span>
         </div>
+        <h1 className="text-xl font-bold tracking-tight text-text-primary">
+          Single-Case Recovery Simulator
+        </h1>
+        <p className="text-xs text-text-secondary mt-0.5">
+          Simulate payment decline scenarios against autonomous policy rules, statutory compliance gates, and recovery link generation.
+        </p>
       </div>
 
       {/* Form and Execution Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Form: 5 cols */}
         <div className="lg:col-span-5 space-y-4">
-          <form onSubmit={handleRunRealCase} className="p-5 rounded-xl glass-panel space-y-4 text-xs font-mono">
-            <div className="text-xs uppercase font-bold text-text-primary border-b border-glass-border pb-2 flex items-center justify-between">
+          <form onSubmit={handleRunRealCase} className="p-5 rounded-md surface-panel space-y-4 text-xs font-mono">
+            <div className="text-xs uppercase font-bold text-text-primary border-b border-border-subtle pb-2 flex items-center justify-between">
               <span>Input Test Parameters</span>
-              <span className="text-[10px] text-text-tertiary">Real Execution</span>
+              <span className="text-[10px] text-text-tertiary">Simulation Parameters</span>
             </div>
 
             {/* Customer Phone */}
@@ -220,30 +216,43 @@ export default function TestLabPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-lg text-xs font-mono font-bold bg-brand-blue text-white shadow-blue-glow hover:bg-brand-blue/90 transition-all flex items-center justify-center gap-2 mt-2"
+              className="w-full py-3 rounded-md text-xs font-mono font-bold bg-brand-default text-white hover:bg-brand-emphasis transition-all flex items-center justify-center gap-2 mt-2 shadow-raised-low cursor-pointer"
             >
               {loading ? (
                 <>
                   <span className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-                  <span>Executing Python Engine &amp; Razorpay API...</span>
+                  <span>Evaluating Remediation Policy...</span>
                 </>
               ) : (
                 <>
                   <Play className="w-3.5 h-3.5" />
-                  <span>EXECUTE ON ACTUAL RAZORPAY TESTBED</span>
+                  <span>Run Recovery Simulation</span>
                 </>
               )}
             </button>
           </form>
 
-          {/* Quick links to clear queue */}
-          <div className="p-3 rounded-lg glass-panel flex items-center justify-between text-xs font-mono">
-            <span className="text-text-tertiary">Queue Management:</span>
+          {/* Quick links to reset queue */}
+          <div className="p-3 rounded-md surface-panel flex items-center justify-between text-xs font-mono">
+            <span className="text-text-tertiary">Benchmark Control:</span>
             <button
-              onClick={() => dataStore.clearCases()}
-              className="text-danger-crimson hover:underline"
+              type="button"
+              onClick={async () => {
+                setLoading(true);
+                try {
+                  await fetch('/api/engine/run-batch', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ seed: 42, mode: 'benchmark' }),
+                  });
+                  window.location.reload();
+                } catch (e) {
+                  setLoading(false);
+                }
+              }}
+              className="text-text-secondary hover:text-brand-default hover:underline cursor-pointer"
             >
-              Clear Blotter to 0 cases
+              Reset to 1,500 Benchmark Seed
             </button>
           </div>
         </div>
@@ -258,45 +267,74 @@ export default function TestLabPage() {
           )}
 
           {!result && !loading && !error && (
-            <div className="p-12 rounded-xl glass-panel text-center text-xs font-mono text-text-tertiary space-y-3">
-              <Terminal className="w-8 h-8 text-brand-blue/60 mx-auto" />
-              <div>Awaiting test execution.</div>
-              <p className="font-sans text-[11px] max-w-sm mx-auto">
-                Fill the parameters on the left and click execute to trigger the actual Python pipeline. The real output
-                from Razorpay will render here.
+            <div className="p-12 rounded-md surface-panel text-center text-xs font-mono text-text-tertiary space-y-3">
+              <Terminal className="w-8 h-8 text-brand-default/60 mx-auto" />
+              <div>Awaiting test simulation.</div>
+              <p className="font-sans text-[11px] max-w-sm mx-auto text-text-secondary">
+                Configure transaction parameters on the left to evaluate decline classification, compliance gating, and recovery dispatch.
               </p>
             </div>
           )}
 
           {loading && (
-            <div className="p-12 rounded-xl glass-panel text-center text-xs font-mono text-text-tertiary space-y-3">
-              <div className="w-8 h-8 border-2 border-brand-blue/30 border-t-brand-blue rounded-full animate-spin mx-auto" />
-              <div className="text-brand-blue font-semibold">Contacting Razorpay Testbed API...</div>
-              <p className="font-sans text-[11px]">
-                Creating authentic payment link, calculating Bayesian timing shrinkage, and appending SHA-256 block.
+            <div className="p-12 rounded-md surface-panel text-center text-xs font-mono text-text-tertiary space-y-3">
+              <div className="w-8 h-8 border-2 border-brand-muted border-t-brand-default rounded-full animate-spin mx-auto" />
+              <div className="text-brand-emphasis font-semibold">Evaluating Remediation Policy...</div>
+              <p className="font-sans text-[11px] text-text-secondary">
+                Calculating Bayesian timing shrinkage, verifying compliance invariants, and generating recovery dispatch.
               </p>
             </div>
           )}
 
           {result && (
-            <div className="p-5 rounded-xl glass-panel space-y-4 text-xs font-mono animate-in fade-in duration-200">
+            <div className="p-5 rounded-md surface-panel space-y-4 text-xs font-mono animate-in fade-in duration-200">
+              {/* Telemetry Synchronization Banner */}
+              {result.metrics_updated && (
+                <div className="p-3.5 rounded-sm border border-positive-muted bg-positive-subtle text-positive-default space-y-2">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold font-mono flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4 text-positive-default" />
+                      <span>Ledger Synchronized</span>
+                    </span>
+                    <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-positive-muted/20 border border-positive-muted font-bold">
+                      N = {result.metrics_updated.new_total_cases.toLocaleString()} Cases
+                    </span>
+                  </div>
+                  <div className="text-[11px] text-text-secondary font-sans leading-relaxed">
+                    Case recorded in transaction queue.
+                    {result.metrics_updated.recovered ? (
+                      <span>
+                        {' '}Total revenue recovered across batch updated to{' '}
+                        <strong className="text-positive-default font-mono">
+                          ₹{result.metrics_updated.new_recovered_amount_rupees.toLocaleString('en-IN', { maximumFractionDigits: 2 })}
+                        </strong>.
+                      </span>
+                    ) : (
+                      <span>
+                        {' '}Zero-retry stopping rule enforced (saving penalty fines).
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex items-center gap-3 pt-1 text-[11px] font-mono">
+                    <Link href="/queue" className="text-brand-default hover:underline flex items-center gap-1 font-medium">
+                      <span>View in Queue Blotter</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                    <span className="text-border-default">·</span>
+                    <Link href="/" className="text-brand-default hover:underline flex items-center gap-1 font-medium">
+                      <span>View on Scoreboard</span>
+                      <ArrowRight className="w-3 h-3" />
+                    </Link>
+                  </div>
+                </div>
+              )}
+
               {/* Header with Case ID and Status */}
-              <div className="flex items-start justify-between border-b border-glass-border pb-3">
+              <div className="flex items-start justify-between border-b border-border-subtle pb-3">
                 <div>
                   <div className="flex items-center gap-2">
                     <span className="text-base font-bold text-text-primary">{result.case_id}</span>
-                    <span
-                      className={clsx(
-                        'px-2 py-0.5 rounded text-[10px] uppercase font-bold',
-                        result.status === 'needs_review'
-                          ? 'bg-human-amber/20 text-human-amber border border-human-amber/40 shadow-[0_0_10px_var(--human-amber-glow)]'
-                          : result.status === 'closed'
-                          ? 'bg-neutral-slate/20 text-text-tertiary'
-                          : 'bg-brand-blue/20 text-brand-blue'
-                      )}
-                    >
-                      {result.status}
-                    </span>
+                    <StatusBadge status={result.status as CaseStatus} size="sm" />
                   </div>
                   <div className="text-[11px] text-text-tertiary mt-0.5">
                     Customer: <span className="text-text-primary">{result.customer_name}</span> · {result.customer_phone}
@@ -305,29 +343,28 @@ export default function TestLabPage() {
 
                 <div className="text-right">
                   <MonospaceAmount amountRupees={result.amount_rupees} size="lg" />
-                  <div className="text-[10px] text-success-teal">Verified Testbed Response</div>
                 </div>
               </div>
 
-              {/* REAL LIVE PAYMENT LINK BANNER */}
+              {/* PAYMENT LINK BANNER */}
               {result.payment_link ? (
-                <div className="p-3.5 rounded-lg border border-success-teal/40 bg-success-teal/10 space-y-1.5">
+                <div className="p-3.5 rounded-lg border border-positive-muted bg-positive-subtle space-y-1.5">
                   <div className="flex items-center justify-between">
-                    <span className="text-[11px] uppercase font-bold text-success-teal flex items-center gap-1.5">
+                    <span className="text-[11px] uppercase font-bold text-positive-default flex items-center gap-1.5">
                       <CheckCircle2 className="w-4 h-4" />
-                      <span>Live Razorpay Payment Link Created</span>
+                      <span>Razorpay Smart PayLink Generated</span>
                     </span>
-                    <span className="text-[10px] text-text-tertiary">ID: {result.payment_link_id}</span>
+                    <span className="text-[10px] text-text-tertiary font-mono">ID: {result.payment_link_id}</span>
                   </div>
-                  <div className="flex items-center justify-between gap-2 bg-canvas/80 p-2 rounded border border-glass-border">
-                    <span className="text-brand-blue font-bold truncate">{result.payment_link}</span>
+                  <div className="flex items-center justify-between gap-2 bg-canvas/80 p-2 rounded border border-border-subtle">
+                    <span className="text-brand-default font-bold truncate">{result.payment_link}</span>
                     <a
                       href={result.payment_link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-2.5 py-1 rounded bg-brand-blue text-white text-[11px] font-semibold flex items-center gap-1 hover:bg-brand-blue/90 shrink-0"
+                      className="px-2.5 py-1 rounded bg-brand-default text-white text-[11px] font-semibold flex items-center gap-1 hover:bg-brand-emphasis shrink-0"
                     >
-                      <span>Open Real Link</span>
+                      <span>Open Payment Link</span>
                       <ExternalLink className="w-3 h-3" />
                     </a>
                   </div>
@@ -389,20 +426,20 @@ export default function TestLabPage() {
               </div>
 
               {/* SHA-256 Audit Signature */}
-              <div className="pt-2 border-t border-glass-border flex items-center justify-between text-[10px] text-text-tertiary">
+              <div className="pt-2 border-t border-border-subtle flex items-center justify-between text-[10px] font-mono text-text-tertiary">
                 <span>SHA-256 Block #{result.audit_block_index}</span>
                 <span className="truncate max-w-[280px] text-text-secondary">{result.audit_block_hash}</span>
-                <span className="text-success-teal">Appended to audit_log.jsonl</span>
+                <span className="text-positive-default font-semibold">Sealed in Ledger</span>
               </div>
 
               {/* View in Queue Button */}
               <div className="pt-2">
                 <Link
-                  href="/"
-                  className="w-full py-2.5 rounded-lg bg-canvas-raised border border-brand-blue/40 text-brand-blue hover:bg-brand-blue/15 text-xs font-bold flex items-center justify-center gap-1.5 transition-colors"
+                  href="/queue"
+                  className="w-full py-2.5 rounded-sm surface-panel border border-border-subtle hover:border-border-default text-text-primary text-xs font-mono font-medium flex items-center justify-center gap-1.5 transition-colors shadow-raised-low"
                 >
-                  <span>View in Live Transaction Queue Blotter</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <span>View in Transaction Queue Blotter</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-brand-default" />
                 </Link>
               </div>
             </div>

@@ -13,6 +13,9 @@ function capitalizeWords(str: string): string {
 }
 
 function deriveCustomerName(raw: any): string {
+  if (raw.customer_name && typeof raw.customer_name === 'string' && raw.customer_name.trim()) {
+    return raw.customer_name.trim();
+  }
   if (raw.company_name && typeof raw.company_name === 'string') {
     return raw.company_name;
   }
@@ -51,7 +54,11 @@ function transformRawCase(raw: any): TransactionCase {
   const isNeedsReview = isAfaCeiling || (isHard && amountRupees > 10000) || isHighValueB2B;
 
   let status: CaseStatus = 'in_progress';
-  if (isNeedsReview) {
+  if (raw.operator_decision?.action === 'approve' || raw.operator_decision?.action === 'override') {
+    status = 'auto_resolved';
+  } else if (raw.operator_decision?.action === 'reject') {
+    status = 'closed';
+  } else if (isNeedsReview) {
     status = 'needs_review';
   } else if (raw.case_status === 'recovered') {
     status = 'auto_resolved';
@@ -170,7 +177,7 @@ function transformRawCase(raw: any): TransactionCase {
         : raw.recovery_method === 'sms'
         ? 'sms'
         : 'auto_retry',
-      paylinkUrl: raw.recovery_method === 'payment_link' ? `https://rzp.io/i/${raw.case_id.slice(0, 8)}` : undefined,
+      paylinkUrl: raw.payment_link_url || (raw.recovery_method === 'payment_link' ? `https://rzp.io/i/${raw.case_id.slice(0, 8)}` : undefined),
       timestamp: raw.last_attempt_at || createdAt,
     },
     outcome: {
@@ -282,5 +289,87 @@ export async function GET(request: NextRequest) {
       { success: false, error: error.message },
       { status: 500 }
     );
+  }
+}
+
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { caseId, action, note, overrideAction } = body;
+
+    if (!caseId || !action) {
+      return NextResponse.json({ success: false, error: 'caseId and action are required' }, { status: 400 });
+    }
+
+    const cwd = process.cwd();
+    const casesPath = path.join(cwd, 'output', 'cases.jsonl');
+    const summaryPath = path.join(cwd, 'output', 'recovery_summary.json');
+
+    if (!fs.existsSync(casesPath)) {
+      return NextResponse.json({ success: false, error: 'cases.jsonl not found' }, { status: 404 });
+    }
+
+    const fileContent = fs.readFileSync(casesPath, 'utf8');
+    const lines = fileContent.split('\n');
+    let targetCase: any = null;
+    let targetIndex = -1;
+
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i].trim();
+      if (!line) continue;
+      try {
+        const parsed = JSON.parse(line);
+        if (parsed.case_id === caseId) {
+          targetCase = parsed;
+          targetIndex = i;
+          break;
+        }
+      } catch (e) {}
+    }
+
+    if (!targetCase) {
+      return NextResponse.json({ success: false, error: `Case ${caseId} not found` }, { status: 404 });
+    }
+
+    const wasAlreadyRecovered = targetCase.case_status === 'recovered';
+
+    if (action === 'approve') {
+      targetCase.case_status = 'recovered';
+      targetCase.recovered_amount_paise = targetCase.amount_paise;
+      targetCase.operator_decision = { action: 'approve', note, timestamp: new Date().toISOString() };
+    } else if (action === 'override') {
+      targetCase.case_status = 'recovered';
+      targetCase.recovered_amount_paise = targetCase.amount_paise;
+      targetCase.recovery_method = 'payment_link';
+      targetCase.operator_decision = { action: 'override', override_action: overrideAction, note, timestamp: new Date().toISOString() };
+    } else if (action === 'reject') {
+      targetCase.case_status = 'closed';
+      targetCase.recovered_amount_paise = 0;
+      targetCase.operator_decision = { action: 'reject', note, timestamp: new Date().toISOString() };
+    }
+
+    lines[targetIndex] = JSON.stringify(targetCase);
+    fs.writeFileSync(casesPath, lines.join('\n'), 'utf8');
+
+    // If approved or overrode and wasn't already recovered, increment recovery summary
+    if ((action === 'approve' || action === 'override') && !wasAlreadyRecovered && fs.existsSync(summaryPath)) {
+      try {
+        const summary = JSON.parse(fs.readFileSync(summaryPath, 'utf8'));
+        summary.recovered_cases = (summary.recovered_cases || 0) + 1;
+        summary.recovered_amount_paise = (summary.recovered_amount_paise || 0) + targetCase.amount_paise;
+        summary.recovered_amount_rupees = summary.recovered_amount_paise / 100.0;
+        summary.overall_recovery_rate = summary.recovered_cases / (summary.total_cases || 1);
+        summary.recovery_rate_by_amount = summary.recovered_amount_paise / (summary.total_amount_paise || 1);
+        fs.writeFileSync(summaryPath, JSON.stringify(summary, null, 2), 'utf8');
+      } catch (e) {}
+    }
+
+    return NextResponse.json({
+      success: true,
+      case: targetCase,
+      action,
+    });
+  } catch (error: any) {
+    return NextResponse.json({ success: false, error: error.message }, { status: 500 });
   }
 }
