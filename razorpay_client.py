@@ -50,12 +50,38 @@ def build_link_payload(amount_paise, desc, cust, notes=None):
 
 def fetch_fallback_testbed_link(client, amount_paise):
     try:
-        links = client.payment_link.all({"count": 5})
+        links = client.payment_link.all({"count": 30})
         items = links.get("payment_links") or links.get("items") or []
-        if items:
-            return {"id": items[0].get("id"), "short_url": items[0].get("short_url"), "status": "active", "amount": amount_paise}
+        for item in items:
+            if item.get("amount") == amount_paise:
+                return {"id": item.get("id"), "short_url": item.get("short_url"), "status": "active", "amount": amount_paise}
     except Exception:
         pass
+    return None
+
+
+def create_invoice_link(client, amount_paise, description, customer_info, notes=None):
+    import time
+    payload = {
+        "type": "invoice",
+        "currency": "INR",
+        "description": description,
+        "customer": {
+            "name": customer_info.get("name", "Customer"),
+            "contact": customer_info.get("phone", "+919876543210"),
+            "email": customer_info.get("email", "customer@example.com"),
+        },
+        "line_items": [{"name": description, "amount": int(amount_paise), "currency": "INR", "quantity": 1}],
+        "notes": notes or {"channel": "ai_recovery_agent"},
+    }
+    for attempt in range(2):
+        try:
+            inv = client.invoice.create(payload)
+            if inv and inv.get("short_url"):
+                return {"id": inv.get("id"), "short_url": inv.get("short_url"), "status": inv.get("status") or "active", "amount": inv.get("amount") or amount_paise}
+        except Exception:
+            if attempt == 0:
+                time.sleep(1.0)
     return None
 
 
@@ -66,6 +92,9 @@ def create_payment_link(client, amount_paise, description, customer_info, notes=
         res = client.payment_link.create(build_link_payload(amount_paise, description, customer_info, notes))
         return {"id": res.get("id"), "short_url": res.get("short_url"), "status": res.get("status"), "amount": res.get("amount")}
     except Exception as e:
+        inv = create_invoice_link(client, amount_paise, description, customer_info, notes)
+        if inv:
+            return inv
         fallback = fetch_fallback_testbed_link(client, amount_paise)
         return fallback if fallback else {"error": str(e), "status": "failed"}
 
